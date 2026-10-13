@@ -1,0 +1,1080 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>ResolveOS | Merchant Command Center</title>
+  <style>
+    :root{--ink:#15253d;--muted:#66758a;--line:#e2e8f0;--panel:#fff;--bg:#f4f7fb;--navy:#152b49;--blue:#2563eb;--blue-soft:#eaf1ff;--green:#147d56;--green-soft:#e7f8ef;--amber:#9a5b06;--amber-soft:#fff3da;--red:#b42318;--red-soft:#fff0ef;--shadow:0 8px 28px rgba(24,44,75,.06)}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:14px}button,input,textarea,select{font:inherit}button{cursor:pointer}a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}.layout{min-height:100vh;display:grid;grid-template-columns:242px minmax(0,1fr)}
+    aside{background:var(--navy);color:#fff;padding:24px 16px;display:flex;flex-direction:column;gap:28px}.brand{display:flex;align-items:center;gap:11px;padding:0 10px}.brand-icon{width:39px;height:39px;border-radius:12px;background:#dbeafe;color:#1d4ed8;display:grid;place-items:center;font-weight:900;font-size:19px}.brand-name{font-size:18px;font-weight:800;letter-spacing:-.04em}.brand-sub{color:#b9c8dc;font-size:11px;margin-top:3px}.nav-label{color:#91a7c2;font-size:10px;font-weight:800;letter-spacing:.14em;padding:0 13px;text-transform:uppercase}.nav{display:grid;gap:6px}.nav button{border:0;background:transparent;color:#d7e2f0;text-align:left;padding:12px 13px;border-radius:10px;display:flex;align-items:center;gap:12px}.nav button.active,.nav button:hover{background:#2a4161;color:white}.nav .glyph{font-size:18px;width:20px;text-align:center}.aside-foot{margin-top:auto;border-top:1px solid #344963;padding:18px 10px 2px;color:#a9bad0;font-size:12px;line-height:1.55}.sandbox-dot{display:inline-block;width:7px;height:7px;background:#45d39a;border-radius:99px;margin-right:7px}
+    main{min-width:0;padding:30px clamp(18px,3vw,42px) 48px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:27px}.eyebrow{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.13em;font-weight:800}.page-title{font-size:28px;letter-spacing:-.04em;margin:6px 0 0;font-weight:800}.subheading{color:var(--muted);margin-top:7px;line-height:1.5}.top-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.pill{display:inline-flex;align-items:center;gap:7px;padding:8px 11px;border-radius:99px;background:#fff;border:1px solid var(--line);font-size:12px;font-weight:700;color:#42536a}.pill.sandbox{color:var(--green);background:var(--green-soft);border-color:#c7efd9}.btn{border:1px solid var(--line);border-radius:9px;padding:10px 13px;background:#fff;color:var(--ink);font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:7px}.btn:hover{background:#f8fafc}.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}.btn.primary:hover{background:#1d4ed8}.btn.danger{background:var(--red);border-color:var(--red);color:#fff}.btn:disabled{opacity:.55;cursor:not-allowed}.grid-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;margin-bottom:22px}.kpi{background:var(--panel);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:14px;padding:18px}.kpi-top{display:flex;justify-content:space-between;align-items:center;gap:8px;color:var(--muted);font-weight:650;font-size:12px}.kpi-icon{background:#f0f5ff;color:#2558ae;border-radius:9px;width:34px;height:34px;display:grid;place-items:center;font-size:17px}.kpi-value{font-size:29px;letter-spacing:-.05em;font-weight:800;margin-top:15px}.kpi-note{color:var(--muted);font-size:11px;margin-top:5px}
+    .content-grid{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(300px,.95fr);gap:18px;align-items:start}.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);min-width:0}.panel-header{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;padding:20px 20px 16px;border-bottom:1px solid var(--line)}.panel-title{font-size:15px;font-weight:800;letter-spacing:-.02em}.panel-caption{color:var(--muted);font-size:12px;margin-top:5px;line-height:1.45}.filters{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.field,select,textarea{background:#fff;color:var(--ink);border:1px solid #d5deea;border-radius:9px;padding:10px 11px;outline:none;width:100%}.field:focus,select:focus,textarea:focus{border-color:#8ab0ff;box-shadow:0 0 0 3px #dbeafe}.filters select{width:auto;max-width:170px;font-size:12px;padding:9px}.filters input{max-width:190px;font-size:12px;padding:9px}.table-wrap{width:100%;overflow:auto}table{width:100%;border-collapse:collapse;text-align:left;white-space:nowrap}th{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#74839a;font-weight:800;background:#fbfcfe;padding:12px 16px;border-bottom:1px solid var(--line)}td{padding:15px 16px;border-bottom:1px solid #edf1f6;font-size:12px}tbody tr:hover{background:#f9fbff}tbody tr:last-child td{border-bottom:0}.case-id{font-weight:800;color:#203653}.case-sub{color:var(--muted);font-size:11px;margin-top:4px;max-width:210px;overflow:hidden;text-overflow:ellipsis}.order-label{font-weight:750}.small-muted{color:var(--muted);font-size:11px;margin-top:4px}.badge{display:inline-flex;align-items:center;gap:5px;border-radius:99px;padding:6px 8px;font-size:10px;font-weight:800;background:#eef2f7;color:#506078;white-space:nowrap}.badge.green{background:var(--green-soft);color:var(--green)}.badge.amber{background:var(--amber-soft);color:var(--amber)}.badge.red{background:var(--red-soft);color:var(--red)}.badge.blue{background:var(--blue-soft);color:#2454ae}.empty{padding:30px 20px;color:var(--muted);text-align:center;line-height:1.6}.right-column{display:grid;gap:18px}.form-body{padding:19px 20px 21px}.form-label{display:block;font-weight:750;font-size:12px;margin:0 0 7px}.form-group{margin-bottom:15px}.hint{color:var(--muted);font-size:11px;line-height:1.5;margin-top:6px}.textarea{min-height:102px;resize:vertical}.form-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.error-box,.success-box,.info-box{padding:11px 12px;border-radius:9px;font-size:12px;line-height:1.5;margin:12px 0}.error-box{background:var(--red-soft);color:var(--red);border:1px solid #ffd4d1}.success-box{background:var(--green-soft);color:var(--green);border:1px solid #c7efd9}.info-box{background:#f0f5ff;color:#365982;border:1px solid #d7e5ff}.hidden{display:none!important}.detail-panel{margin-top:18px}.detail-body{padding:20px}.detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}.detail-tile{padding:13px;background:#f8fafd;border:1px solid #e8edf4;border-radius:10px;min-width:0}.detail-tile .label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-weight:800}.detail-tile .value{font-weight:800;margin-top:7px;overflow-wrap:anywhere}.detail-section{margin-top:18px}.detail-section h3{font-size:12px;margin:0 0 9px}.investigator-card{margin-top:18px;padding:16px;border:1px solid #dbe6f7;background:#f8fbff;border-radius:12px}.investigator-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.investigator-title{font-weight:850;font-size:14px}.investigator-sub{font-size:11px;color:var(--muted);margin-top:4px}.investigator-action{padding:12px;background:#fff;border:1px solid #dbe6f7;border-radius:9px;margin-top:12px;line-height:1.55}.investigator-list{padding-left:20px;line-height:1.65;color:#40536c;font-size:12px}.investigator-guardrails{font-size:11px;color:#596b82;line-height:1.55;margin-top:10px}.reason-list{margin:0;padding-left:18px;color:#52637a;line-height:1.65;font-size:12px}.message-quote{padding:14px 15px;background:#f8fafd;border-left:3px solid #8ab0ff;border-radius:0 9px 9px 0;line-height:1.6}.timeline{display:grid;gap:12px}.event{display:grid;grid-template-columns:10px minmax(0,1fr);gap:10px}.event-dot{width:8px;height:8px;background:#3b82f6;border-radius:100%;margin-top:5px;box-shadow:0 0 0 4px #e8f0ff}.event-title{font-size:11px;font-weight:800}.event-time{font-size:10px;color:var(--muted);margin-top:3px}.event-details{font-size:11px;color:#53647a;margin-top:4px;overflow-wrap:anywhere}.order-list{display:grid}.order-row{padding:14px 18px;display:flex;gap:10px;align-items:center;border-bottom:1px solid #edf1f6}.order-row:last-child{border-bottom:0}.order-icon{width:36px;height:36px;display:grid;place-items:center;border-radius:10px;background:#f0f5ff;color:#2454ae;font-size:17px;flex-shrink:0}.order-main{flex:1;min-width:0}.order-name{font-size:12px;font-weight:800;overflow:hidden;text-overflow:ellipsis}.order-meta{font-size:11px;color:var(--muted);margin-top:4px}.order-right{text-align:right}.order-amount{font-weight:800;font-size:12px}.admin-auth{padding:16px 18px;background:#f8fafd;border-top:1px solid var(--line);border-radius:0 0 14px 14px}.admin-auth label{display:block;font-size:11px;font-weight:800;margin-bottom:7px}.admin-row{display:flex;gap:8px}.admin-row input{min-width:0}.admin-note{font-size:10px;color:var(--muted);line-height:1.5;margin-top:8px}.footer-note{margin-top:20px;color:#7c8ba0;font-size:11px;text-align:center}.toast{position:fixed;right:22px;bottom:22px;max-width:min(430px,calc(100vw - 44px));background:#172b47;color:white;border-radius:12px;padding:14px 16px;box-shadow:0 16px 40px #172b4733;z-index:50;line-height:1.5}.toast.error{background:#9d251f}.mobile-brand{display:none}
+    @media(max-width:1150px){.layout{grid-template-columns:205px minmax(0,1fr)}.content-grid{grid-template-columns:minmax(0,1fr)}.right-column{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}.grid-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:720px){.layout{display:block}aside{display:none}main{padding:20px 14px 36px}.topbar{align-items:flex-start;flex-direction:column}.page-title{font-size:24px}.grid-kpis{gap:9px}.kpi{padding:13px}.kpi-value{font-size:25px}.right-column{grid-template-columns:minmax(0,1fr)}.panel-header{padding:16px;flex-direction:column}.filters{width:100%}.filters input,.filters select{max-width:none;flex:1;min-width:110px}.detail-grid{grid-template-columns:1fr 1fr}.table-wrap{overflow-x:auto}td,th{padding:12px}.top-actions{width:100%;justify-content:space-between}.admin-row{flex-direction:column}}
+  </style>
+</head>
+<body>
+<div class="layout">
+  <aside>
+    <div class="brand"><div class="brand-icon">R</div><div><div class="brand-name">ResolveOS</div><div class="brand-sub">Payment resolution AI</div></div></div>
+    <div><div class="nav-label">Workspace</div><div class="nav"><button class="active" type="button" data-scroll="overview"><span class="glyph">▦</span>Overview</button><button type="button" data-scroll="cases-panel"><span class="glyph">◫</span>Case queue</button><button type="button" data-scroll="orders-panel"><span class="glyph">▣</span>Orders & payments</button><button type="button" data-scroll="detail-panel"><span class="glyph">◷</span>Audit timeline</button></div></div>
+    <div class="aside-foot"><span class="sandbox-dot"></span><strong>Sandbox environment</strong><br>Test data only. No real money should move through these demo transactions.</div>
+  </aside>
+  <main id="overview">
+    <header class="topbar">
+      <div><div class="eyebrow">Merchant workspace / Overview</div><h1 class="page-title">Payment resolution command center</h1><div class="subheading">Investigate customer complaints, review evidence, and control merchant-approved actions.</div></div>
+      <div class="top-actions"><span class="pill sandbox"><span class="sandbox-dot"></span>PayPal Sandbox</span><button class="btn" id="refresh-btn" type="button">↻ Refresh data</button></div>
+    </header>
+    <div class="grid-kpis">
+      <section class="kpi"><div class="kpi-top"><span>Cases in queue</span><span class="kpi-icon">◫</span></div><div class="kpi-value" id="kpi-total">—</div><div class="kpi-note">Recorded investigations</div></section>
+      <section class="kpi"><div class="kpi-top"><span>Awaiting approval</span><span class="kpi-icon">✋</span></div><div class="kpi-value" id="kpi-approval">—</div><div class="kpi-note">Merchant action required</div></section>
+      <section class="kpi"><div class="kpi-top"><span>Refunds completed</span><span class="kpi-icon">✓</span></div><div class="kpi-value" id="kpi-refunds">—</div><div class="kpi-note">Confirmed by PayPal response</div></section>
+      <section class="kpi"><div class="kpi-top"><span>Orders monitored</span><span class="kpi-icon">▣</span></div><div class="kpi-value" id="kpi-orders">—</div><div class="kpi-note">Demo merchant records</div></section>
+    </div>
+    <div class="content-grid">
+      <section class="panel" id="cases-panel">
+        <div class="panel-header"><div><div class="panel-title">Investigation queue</div><div class="panel-caption">Select a case to inspect the reasoning and audit history.</div></div><div class="filters"><input id="case-search" type="search" placeholder="Search case or order" aria-label="Search cases"><select id="status-filter" aria-label="Filter by status"><option value="all">All statuses</option><option value="AWAITING_MERCHANT_APPROVAL">Awaiting approval</option><option value="REFUND_COMPLETED">Refund completed</option><option value="NEEDS_HUMAN_REVIEW">Human review</option><option value="AWAITING_CAPTURE_LINK">Missing capture</option><option value="REFUND_REQUIRES_RECONCILIATION">Reconciliation</option></select></div></div>
+        <div class="table-wrap"><table><thead><tr><th>Case</th><th>Order</th><th>Status</th><th>Confidence</th><th></th></tr></thead><tbody id="cases-table-body"><tr><td colspan="5" class="empty">Loading case queue…</td></tr></tbody></table></div>
+      </section>
+      <div class="right-column">
+        <section class="panel" id="new-case-panel"><div class="panel-header"><div><div class="panel-title">Investigate a complaint</div><div class="panel-caption">Create a new AI-assisted support case.</div></div><span class="badge blue">AI agent</span></div>
+          <form class="form-body" id="new-case-form">
+            <div class="form-group"><label class="form-label" for="order-select">Related order</label><select id="order-select" required><option value="">Loading orders…</option></select></div>
+            <div class="form-group"><label class="form-label" for="customer-message">Customer message</label><textarea class="textarea" id="customer-message" minlength="5" maxlength="3000" required placeholder="Example: I was charged, but my order never shipped. Can you help?"></textarea><div class="hint">The agent classifies the complaint and applies the demo policy. Payment actions still require backend checks and merchant approval.</div></div>
+            <div id="new-case-feedback" class="hidden" role="status"></div><button class="btn primary" type="submit" id="create-case-btn">✦ Investigate complaint</button>
+          </form>
+        </section>
+        <section class="panel" id="orders-panel"><div class="panel-header"><div><div class="panel-title">Orders & payment state</div><div class="panel-caption">Seeded demo evidence paired with PayPal capture state.</div></div></div><div class="order-list" id="orders-list"><div class="empty">Loading orders…</div></div></section>
+      </div>
+    </div>
+    <section class="panel detail-panel" id="detail-panel"><div class="panel-header"><div><div class="panel-title">Case detail & audit trail</div><div class="panel-caption" id="detail-caption">Choose a case in the investigation queue to review its evidence.</div></div><div id="detail-status"></div></div><div class="detail-body" id="case-detail-body"><div class="empty">No case selected yet. Select a case above after data loads.</div></div><div class="admin-auth"><label for="admin-key">Merchant authorization key</label><div class="admin-row"><input class="field" type="password" id="admin-key" autocomplete="off" placeholder="Enter ADMIN_API_KEY for this session only"><button class="btn" id="clear-admin-key" type="button">Clear</button></div><div class="admin-note">Used only in this browser tab for the approve-refund request. This dashboard does not save the key to localStorage. Keep your key private. Only use approval actions against your local Sandbox test data.</div></div></section>
+    <div class="footer-note">ResolveOS prototype · PayPal Sandbox only · AI recommends; backend policy and merchant authorization control payment actions.</div>
+  </main>
+</div>
+<div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+<script>
+(() => {
+  const state = { orders: [], cases: [], selectedCaseId: null, selectedCase: null, busy: false };
+  const el = (id) => document.getElementById(id);
+  let toastTimer;
+
+  function escapeHtml(value) {
+    return String(value ?? '').replace(/[&<>"']/g, (ch) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  }
+  function money(amount, currency='USD') {
+    const n = Number(amount);
+    if (!Number.isFinite(n)) return `${escapeHtml(amount)} ${escapeHtml(currency)}`;
+    try { return new Intl.NumberFormat(undefined, {style:'currency', currency}).format(n); }
+    catch { return `${n.toFixed(2)} ${currency}`; }
+  }
+  function dateLabel(value) {
+    if (!value) return '—';
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? value : date.toLocaleString();
+  }
+  function statusClass(status) {
+    const s = String(status || '').toUpperCase();
+    if (s.includes('COMPLETED') || s === 'REFUNDED' || s.startsWith('CLOSED_') || s === 'CLOSED_NO_ACTION') return 'green';
+    if (s.includes('AWAITING') || s.includes('PENDING') || s.includes('SUBMITTING')) return 'amber';
+    if (s.includes('RECONCILIATION') || s.includes('HUMAN_REVIEW') || s.includes('NEEDS_MORE')) return 'red';
+    if (s.includes('CANDIDATE')) return 'blue';
+    return '';
+  }
+  function badge(status) {
+    return `<span class="badge ${statusClass(status)}">${escapeHtml(String(status || 'UNKNOWN').replaceAll('_',' '))}</span>`;
+  }
+  function isCaseClosedStatus(status) {
+    const value = String(status || '').toUpperCase();
+    return value.startsWith('CLOSED_') || value === 'CLOSED_NO_ACTION';
+  }
+  function showToast(message, isError=false) {
+    const box = el('toast'); box.textContent = message; box.className = `toast${isError ? ' error' : ''}`;
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => box.classList.add('hidden'), 5200);
+  }
+  async function api(path, options={}) {
+    const headers = new Headers(options.headers || {});
+    if (options.body && !headers.has('Content-Type')) headers.set('Content-Type','application/json');
+    const response = await fetch(path, {...options, headers});
+    const text = await response.text();
+    let data = null;
+    try { data = text ? JSON.parse(text) : null; } catch { data = {detail:text || response.statusText}; }
+    if (!response.ok) {
+      const detail = data && (data.detail || data.message) ? (data.detail || data.message) : `Request failed (${response.status})`;
+      const error = new Error(typeof detail === 'string' ? detail : JSON.stringify(detail));
+      error.status = response.status; throw error;
+    }
+    return data;
+  }
+  function caseRows() {
+    const search = el('case-search').value.trim().toLowerCase();
+    const status = el('status-filter').value;
+    return state.cases.filter(c => {
+      const haystack = `${c.case_id} ${c.order_id} ${c.issue_type} ${c.summary} ${c.customer_message}`.toLowerCase();
+      return (!search || haystack.includes(search)) && (status === 'all' || c.status === status);
+    });
+  }
+  function renderCases() {
+    const rows = caseRows(); const body = el('cases-table-body');
+    if (!rows.length) {
+      body.innerHTML = `<tr><td colspan="5" class="empty">${state.cases.length ? 'No cases match these filters.' : 'No cases yet. Create the first investigation using the form.'}</td></tr>`;
+      return;
+    }
+    body.innerHTML = rows.map(c => `<tr>
+      <td><div class="case-id">${escapeHtml(c.case_id)}</div><div class="case-sub" title="${escapeHtml(c.summary)}">${escapeHtml(c.summary || c.customer_message || '')}</div></td>
+      <td><div class="order-label">${escapeHtml(c.order_id)}</div><div class="small-muted">${escapeHtml(c.issue_type || 'OTHER')}</div></td>
+      <td>${badge(c.status)}</td><td>${Math.round((Number(c.confidence)||0)*100)}%</td>
+      <td><button class="btn" type="button" data-open-case="${escapeHtml(c.case_id)}">Review</button></td>
+    </tr>`).join('');
+  }
+  function renderOrders() {
+    const list = el('orders-list');
+    if (!state.orders.length) { list.innerHTML = '<div class="empty">No orders were returned by the API.</div>'; return; }
+    list.innerHTML = state.orders.map(o => `<div class="order-row">
+      <div class="order-icon">▣</div><div class="order-main"><div class="order-name">${escapeHtml(o.item_name)} · ${escapeHtml(o.order_id)}</div><div class="order-meta">Shipping: ${escapeHtml(o.shipping_status)} · Payment: ${escapeHtml(o.payment_status)}</div><div class="order-meta">${o.paypal_capture_id ? 'Capture linked' : 'No capture linked'} · Refund: ${escapeHtml(o.refund_status || 'NONE')}</div></div>
+      <div class="order-right"><div class="order-amount">${money(o.amount,o.currency)}</div>${o.paypal_capture_id ? '<span class="badge green">Captured</span>' : `<a class="small-muted" href="/checkout/${encodeURIComponent(o.order_id)}" target="_blank" rel="noopener">Open checkout ↗</a>`}</div>
+    </div>`).join('');
+  }
+  function renderKPIs() {
+    el('kpi-total').textContent = state.cases.length;
+    el('kpi-approval').textContent = state.cases.filter(c => c.status === 'AWAITING_MERCHANT_APPROVAL').length;
+    el('kpi-refunds').textContent = state.cases.filter(c => c.status === 'REFUND_COMPLETED' || c.refund_status === 'COMPLETED').length;
+    el('kpi-orders').textContent = state.orders.length;
+  }
+  function renderOrderOptions() {
+    const select = el('order-select');
+    const previous = select.value;
+    select.innerHTML = `<option value="">Choose an order…</option>` + state.orders.map(o => `<option value="${escapeHtml(o.order_id)}">${escapeHtml(o.order_id)} — ${escapeHtml(o.item_name)} (${money(o.amount,o.currency)})</option>`).join('');
+    if (state.orders.some(o => o.order_id === previous)) select.value = previous;
+  }
+  function setFeedback(message, type) {
+    const node = el('new-case-feedback'); node.className = `${type}-box`; node.textContent = message;
+  }
+  async function openCase(caseId) {
+    state.selectedCaseId = caseId;
+    el('case-detail-body').innerHTML = '<div class="empty">Loading case details…</div>';
+    el('detail-caption').textContent = `Loading ${caseId}`;
+    try {
+      const c = await api(`/cases/${encodeURIComponent(caseId)}`);
+      state.selectedCase = c; renderCaseDetail(c);
+      document.querySelectorAll('[data-open-case]').forEach(b => b.classList.toggle('primary', b.dataset.openCase === caseId));
+    } catch (error) {
+      el('case-detail-body').innerHTML = `<div class="error-box">${escapeHtml(error.message)}</div>`;
+      showToast(`Could not load case: ${error.message}`, true);
+    }
+  }
+  function renderCaseDetail(c) {
+    const order = c.order || state.orders.find(o => o.order_id === c.order_id) || {};
+    el('detail-caption').textContent = `${c.case_id} · ${c.order_id} · Last updated ${dateLabel(c.updated_at)}`;
+    el('detail-status').innerHTML = badge(c.status);
+    const canApprove = c.status === 'AWAITING_MERCHANT_APPROVAL' && c.policy_decision === 'REFUND_CANDIDATE';
+    const reasons = Array.isArray(c.reasons) ? c.reasons : [];
+    const events = Array.isArray(c.audit_log) ? c.audit_log : [];
+    el('case-detail-body').innerHTML = `
+      <div class="form-footer"><div><div class="panel-title">${escapeHtml(c.issue_type || 'Support issue').replaceAll('_',' ')}</div><div class="panel-caption">AI confidence: ${Math.round((Number(c.confidence)||0)*100)}% · Policy: ${escapeHtml(c.policy_decision || '—')}</div></div>
+      ${canApprove ? '<button class="btn primary" id="approve-refund-btn" type="button">✓ Approve $'+escapeHtml(order.amount || '')+' refund</button>' : (c.status === 'REFUND_COMPLETED' ? '<span class="badge green">Refund complete</span>' : '')}</div>
+      <div class="detail-grid">
+        <div class="detail-tile"><div class="label">Order amount</div><div class="value">${money(order.amount || '—',order.currency || 'USD')}</div></div>
+        <div class="detail-tile"><div class="label">Shipping state</div><div class="value">${escapeHtml(order.shipping_status || '—')}</div></div>
+        <div class="detail-tile"><div class="label">Payment capture</div><div class="value">${order.paypal_capture_id ? escapeHtml(order.paypal_capture_id) : 'Not linked'}</div></div>
+        <div class="detail-tile"><div class="label">Refund state</div><div class="value">${escapeHtml(c.refund_status || order.refund_status || 'NONE')}</div></div>
+      </div>
+      <div class="detail-section"><h3>Customer message</h3><div class="message-quote">${escapeHtml(c.customer_message || 'No message supplied.')}</div></div>
+      <div class="detail-section"><h3>Investigation summary</h3><div class="panel-caption" style="font-size:13px;color:#40536c">${escapeHtml(c.summary || '')}</div></div>
+      <div class="detail-section"><h3>Policy reasons</h3>${reasons.length ? `<ul class="reason-list">${reasons.map(r=>`<li>${escapeHtml(r)}</li>`).join('')}</ul>` : '<div class="panel-caption">No policy reasons recorded.</div>'}</div>
+      ${renderEvidenceInvestigator(c)}
+      ${renderInvestigationOrchestrator(c)}
+      ${renderEndToEndWorkflow(c)}
+      ${renderFollowUpActionPlan(c)}
+      ${renderCustomerMessageDrafts(c)}
+      ${renderEvidenceCollection(c)}
+      ${renderResolutionSummary(c)}
+      <div class="detail-section"><h3>Audit timeline</h3>${events.length ? `<div class="timeline">${events.slice().reverse().map(e=>`<div class="event"><div class="event-dot"></div><div><div class="event-title">${escapeHtml(e.action)} <span class="small-muted">· ${escapeHtml(e.actor)}</span></div><div class="event-time">${escapeHtml(dateLabel(e.created_at))}</div><div class="event-details">${escapeHtml(auditSummary(e.details))}</div></div></div>`).join('')}</div>` : '<div class="panel-caption">No audit events recorded for this case yet.</div>'}</div>
+      ${c.paypal_refund_id ? `<div class="detail-section"><h3>PayPal refund reference</h3><div class="message-quote">${escapeHtml(c.paypal_refund_id)} · ${escapeHtml(c.refund_status || 'status unknown')}</div></div>` : ''}
+    `;
+    const approveButton = document.getElementById('approve-refund-btn');
+    if (approveButton) approveButton.addEventListener('click', () => approveRefund(c.case_id));
+    const evidenceForm = document.getElementById('evidence-form');
+    if (evidenceForm) evidenceForm.addEventListener('submit', (event) => saveEvidence(event, c.case_id));
+    const reevaluateButton = document.getElementById('reevaluate-case-btn');
+    if (reevaluateButton) reevaluateButton.addEventListener('click', () => reevaluateCase(c.case_id));
+    const orchestrateButton = document.getElementById('run-investigation-btn');
+    if (orchestrateButton) orchestrateButton.addEventListener('click', () => runInvestigation(c.case_id, orchestrateButton));
+    const coordinateWorkflowButton = document.getElementById('coordinate-end-to-end-workflow-btn');
+    if (coordinateWorkflowButton) coordinateWorkflowButton.addEventListener('click', () => coordinateEndToEndWorkflow(c.case_id, coordinateWorkflowButton));
+    document.querySelectorAll('[data-review-evidence]').forEach(button => {
+      button.addEventListener('click', () => reviewEvidence(
+        c.case_id,
+        button.dataset.reviewEvidence,
+        button.dataset.reviewDecision,
+        button
+      ));
+    });
+    document.querySelectorAll('[data-revoke-verification]').forEach(button => {
+      button.addEventListener('click', () => revokeEvidenceVerification(
+        c.case_id,
+        button.dataset.revokeVerification,
+        button
+      ));
+    });
+    document.querySelectorAll('[data-refresh-tracking]').forEach(button => {
+      button.addEventListener('click', () => refreshCarrierTracking(c.case_id, button.dataset.refreshTracking, button));
+    });
+    const refreshPlanButton = document.getElementById('refresh-follow-up-plan-btn');
+    if (refreshPlanButton) refreshPlanButton.addEventListener('click', () => refreshFollowUpPlan(c.case_id, refreshPlanButton));
+    document.querySelectorAll('[data-follow-up-action-id]').forEach(button => {
+      button.addEventListener('click', () => updateFollowUpAction(c.case_id, button.dataset.followUpActionId, button.dataset.followUpStatus, button));
+    });
+    document.querySelectorAll('[data-follow-up-reevaluate]').forEach(button => {
+      button.addEventListener('click', () => reevaluateCase(c.case_id));
+    });
+    const generateMessageDraftButton = document.getElementById('generate-customer-message-draft-btn');
+    if (generateMessageDraftButton) generateMessageDraftButton.addEventListener('click', () => generateCustomerMessageDraft(c.case_id, generateMessageDraftButton));
+    document.querySelectorAll('[data-save-customer-message-draft]').forEach(button => {
+      button.addEventListener('click', () => saveCustomerMessageDraft(c.case_id, button.dataset.saveCustomerMessageDraft, button));
+    });
+    document.querySelectorAll('[data-copy-customer-message-draft]').forEach(button => {
+      button.addEventListener('click', () => copyCustomerMessageDraft(button.dataset.copyCustomerMessageDraft));
+    });
+    const generateResolutionSummaryButton = document.getElementById('generate-resolution-summary-btn');
+    if (generateResolutionSummaryButton) generateResolutionSummaryButton.addEventListener('click', () => generateResolutionSummary(c.case_id, generateResolutionSummaryButton));
+    const closeCaseForm = document.getElementById('close-resolution-case-form');
+    if (closeCaseForm) closeCaseForm.addEventListener('submit', (event) => closeResolutionCase(event, c.case_id));
+  }
+  function renderResolutionSummary(c) {
+    const records = Array.isArray(c.resolution_summaries) ? c.resolution_summaries : [];
+    const latest = records.length ? records[0] : null;
+    const caseState = String(c.status || '').toUpperCase();
+    const isClosed = caseState.startsWith('CLOSED_') || caseState === 'CLOSED_NO_ACTION';
+    const generateButton = !isClosed
+      ? '<button class="btn primary" type="button" id="generate-resolution-summary-btn">✦ Generate / refresh resolution summary</button>'
+      : '';
+    if (!latest) {
+      return `<section class="investigator-card" aria-label="Resolution Summary and Case Closure">
+        <div class="investigator-head"><div><div class="investigator-title">▣ Resolution Summary &amp; Case Closure</div><div class="investigator-sub">Compile the saved investigation before making an explicit merchant closeout decision.</div></div><span class="badge blue">Not generated</span></div>
+        <div class="info-box">The summary collects the complaint, current policy, payment linkage, evidence review, tracking comparison, follow-up tasks, and customer-message draft history. Generating a summary does not close the case or perform a payment action.</div>
+        ${isClosed ? '<div class="info-box">This case is already closed; no new summary can be generated through this workflow.</div>' : `<div class="form-footer">${generateButton}</div>`}
+      </section>`;
+    }
+    const summary = latest.summary && typeof latest.summary === 'object' ? latest.summary : {};
+    const ctx = summary.case && typeof summary.case === 'object' ? summary.case : {};
+    const order = summary.order && typeof summary.order === 'object' ? summary.order : {};
+    const evidence = summary.evidence && typeof summary.evidence === 'object' ? summary.evidence : {};
+    const evidenceCounts = evidence.counts && typeof evidence.counts === 'object' ? evidence.counts : {};
+    const tracking = summary.tracking && typeof summary.tracking === 'object' ? summary.tracking : {};
+    const follow = summary.follow_up && typeof summary.follow_up === 'object' ? summary.follow_up : {};
+    const messages = summary.customer_messages && typeof summary.customer_messages === 'object' ? summary.customer_messages : {};
+    const readiness = summary.closure_readiness && typeof summary.closure_readiness === 'object' ? summary.closure_readiness : {};
+    const blockers = Array.isArray(readiness.blockers) ? readiness.blockers : [];
+    const findings = Array.isArray(summary.findings) ? summary.findings : [];
+    const integrityIssues = Array.isArray(evidence.integrity_issues) ? evidence.integrity_issues : [];
+    const status = String(latest.status || 'DRAFT').toUpperCase();
+    const statusClassName = status === 'CLOSED' ? 'green' : 'blue';
+    const closureNote = String(latest.closure_note || '');
+    const outcomeLabels = {
+      RESOLVED_REFUND_COMPLETED: 'Resolved — refund completed',
+      RESOLVED_NO_REFUND: 'Resolved — no refund',
+      ESCALATED: 'Escalated / handed off',
+      CUSTOMER_WITHDREW: 'Customer withdrew request',
+      DUPLICATE_CASE: 'Duplicate case'
+    };
+    const closedPanel = status === 'CLOSED' ? `
+      <div class="detail-grid">
+        <div class="detail-tile"><div class="label">Closure outcome</div><div class="value">${escapeHtml(outcomeLabels[latest.closure_outcome] || latest.closure_outcome || '—')}</div></div>
+        <div class="detail-tile"><div class="label">Closed by</div><div class="value">${escapeHtml(latest.closed_by || 'merchant')}</div><div class="small-muted">${escapeHtml(dateLabel(latest.closed_at))}</div></div>
+      </div>
+      <div class="message-quote"><strong>Closure note</strong><div style="margin-top:6px">${escapeHtml(closureNote)}</div></div>
+      <div class="info-box">Case closure was explicitly recorded by a merchant. It did not execute or change a payment. Follow-up changes and new evidence are blocked for closed cases.</div>` : `
+      <div class="detail-section"><h3>Closure readiness</h3><div class="form-footer"><span class="badge ${readiness.ready ? 'green' : 'amber'}">${escapeHtml(String(readiness.status || 'NOT_READY_TO_CLOSE').replaceAll('_',' '))}</span></div>
+      ${blockers.length ? `<ul class="reason-list">${blockers.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul>` : '<div class="success-box">The saved data has no automated closure blockers. A merchant must still choose and confirm a truthful outcome.</div>'}</div>
+      <div class="detail-section"><h3>Explicit merchant closeout</h3>
+        <div class="info-box">Closing a case is separate from issuing a refund. The backend checks outcome-specific prerequisites. “Resolved — no refund” is blocked when the policy still needs information or follow-up tasks remain open/blocked. Escalation, withdrawal, and duplicate dispositions require an honest handoff/reason note.</div>
+        <form id="close-resolution-case-form">
+          <div class="form-group"><label class="form-label" for="resolution-closure-outcome">Closure outcome</label><select id="resolution-closure-outcome" required>
+            <option value="RESOLVED_REFUND_COMPLETED">Resolved — refund completed</option>
+            <option value="RESOLVED_NO_REFUND">Resolved — no refund</option>
+            <option value="ESCALATED">Escalated / handed off</option>
+            <option value="CUSTOMER_WITHDREW">Customer withdrew request</option>
+            <option value="DUPLICATE_CASE">Duplicate case</option>
+          </select></div>
+          <div class="form-group"><label class="form-label" for="resolution-closure-note">Closure / handoff note</label><textarea class="textarea" id="resolution-closure-note" rows="3" maxlength="2000" minlength="12" required placeholder="Record the decision, evidence reviewed, and/or handoff destination. Do not claim facts that were not verified."></textarea></div>
+          <div class="form-footer"><button class="btn danger" type="submit" id="close-resolution-case-btn">Close case with selected outcome</button></div>
+        </form>
+      </div>`;
+    return `<section class="investigator-card" aria-label="Resolution Summary and Case Closure">
+      <div class="investigator-head"><div><div class="investigator-title">▣ Resolution Summary &amp; Case Closure</div><div class="investigator-sub">${escapeHtml(latest.summary_id || '')} · Generated by ${escapeHtml(latest.created_by || 'merchant')} · ${escapeHtml(dateLabel(latest.created_at))}</div></div><span class="badge ${statusClassName}">${escapeHtml(status)}</span></div>
+      <div class="info-box">${escapeHtml(summary.disclaimer || 'Summary reflects saved records only. It does not independently authenticate evidence.')}</div>
+      <div class="detail-grid">
+        <div class="detail-tile"><div class="label">Issue</div><div class="value">${escapeHtml(String(ctx.issue_type || '—').replaceAll('_',' '))}</div><div class="small-muted">Case ${escapeHtml(ctx.case_id || c.case_id)}</div></div>
+        <div class="detail-tile"><div class="label">Saved policy</div><div class="value">${escapeHtml(ctx.policy_decision || '—')}</div><div class="small-muted">Status: ${escapeHtml(ctx.case_status || c.status || '—')}</div></div>
+        <div class="detail-tile"><div class="label">Order and payment</div><div class="value">${escapeHtml(order.item_name || '—')} · ${escapeHtml(money(order.amount || '—', order.currency || 'USD'))}</div><div class="small-muted">Payment ${escapeHtml(order.payment_status || '—')} · Capture ${order.capture_linked ? 'linked' : 'not linked'} · Refund ${escapeHtml(order.refund_status || 'NONE')}</div></div>
+        <div class="detail-tile"><div class="label">Evidence history</div><div class="value">${Number(evidenceCounts.total)||0} record(s)</div><div class="small-muted">${Number(evidenceCounts.verified)||0} VERIFIED without detected integrity warnings · ${Number(evidenceCounts.rejected)||0} rejected · ${Number(evidenceCounts.unverified)||0} unverified</div><div class="small-muted">${Number(evidenceCounts.historical_verified_needing_review)||0} historical VERIFIED needing correction · ${Number(evidenceCounts.verification_revoked)||0} revoked/invalidated</div></div>
+        <div class="detail-tile"><div class="label">Follow-up actions</div><div class="value">${Number(follow.total)||0} action(s)</div><div class="small-muted">${Number(follow.open_or_in_progress)||0} open / in progress · ${Number(follow.blocked)||0} blocked · ${Number(follow.completed)||0} completed</div></div>
+        <div class="detail-tile"><div class="label">Customer messages</div><div class="value">${Number(messages.total)||0} draft(s)</div><div class="small-muted">${Number(messages.unsent_drafts)||0} unsent · ResolveOS does not send messages</div></div>
+      </div>
+      <div class="detail-section"><h3>Carrier comparison</h3>${tracking.latest_check_id ? `<div class="message-quote">${escapeHtml(tracking.latest_check_id)} · ${escapeHtml(tracking.latest_tracking_number || '')}<div style="margin-top:6px">Status: ${escapeHtml(tracking.status || 'unknown')} · Outcome: ${escapeHtml(tracking.comparison_outcome || 'not recorded')}</div><div class="small-muted">${tracking.simulated ? 'SIMULATED DEMO — not genuine shipment evidence.' : 'Saved provider result; manually verify the official source.'}</div></div>` : '<div class="panel-caption">No saved tracking result.</div>'}</div>
+      <div class="detail-section"><h3>Key findings</h3>${findings.length ? `<ul class="reason-list">${findings.map(item=>`<li>${escapeHtml(item)}</li>`).join('')}</ul>` : '<div class="panel-caption">No findings recorded.</div>'}</div>
+      ${integrityIssues.length ? `<div class="detail-section"><h3>Evidence integrity items</h3><div class="info-box">${escapeHtml(evidence.verified_count_note || 'Integrity checks flag contradictions in saved metadata; they do not authenticate external sources.')}</div><ul class="reason-list">${integrityIssues.map(item=>`<li><strong>${escapeHtml(item.evidence_id || 'Unknown evidence')} · ${escapeHtml(item.status || 'REVIEW REQUIRED')}</strong>: ${escapeHtml(item.reason || 'Review required.')} ${escapeHtml(item.recommended_action || '')}</li>`).join('')}</ul></div>` : ''}
+      ${closedPanel}
+      ${status !== 'CLOSED' && !isClosed ? `<div class="detail-section"><h3>Refresh summary</h3><div class="hint">Generate another snapshot after investigation, evidence, or follow-up state changes. Earlier summaries remain in history.</div><div class="form-footer">${generateButton}</div></div>` : ''}
+      <div class="detail-section"><h3>Previous summary versions</h3>${records.length > 1 ? `<ul class="reason-list">${records.slice(1).map(rec=>`<li>${escapeHtml(rec.summary_id)} · ${escapeHtml(rec.status)} · ${escapeHtml(dateLabel(rec.created_at))}${rec.closure_outcome ? ` · ${escapeHtml(rec.closure_outcome)}` : ''}</li>`).join('')}</ul>` : '<div class="panel-caption">No earlier summary versions.</div>'}</div>
+    </section>`;
+  }
+
+  function renderEvidenceInvestigator(c) {
+    const inv = c.evidence_investigation || {};
+    const ai = c.ai_status || {};
+    const checklist = Array.isArray(inv.checklist) ? inv.checklist : [];
+    const guardrails = Array.isArray(inv.guardrails) ? inv.guardrails : [];
+    const provider = ai.provider || 'AI status unavailable';
+    const model = ai.model ? ` · ${ai.model}` : '';
+    const statusBadge = ai.fallback
+      ? '<span class="badge amber">Rules fallback</span>'
+      : '<span class="badge green">Model response</span>';
+    const reason = ai.fallback_reason ? `<div class="investigator-sub">${escapeHtml(ai.fallback_reason)}</div>` : '';
+    return `<section class="investigator-card" aria-label="Evidence Investigator">
+      <div class="investigator-head"><div><div class="investigator-title">✦ Evidence Investigator</div><div class="investigator-sub">${escapeHtml(inv.mode || 'Policy-guided recommendations')}</div></div>${statusBadge}</div>
+      <div class="investigator-sub">Classifier: ${escapeHtml(provider + model)}</div>${reason}
+      <div class="detail-section"><h3>Evidence to collect</h3>${checklist.length ? `<ul class="investigator-list">${checklist.map(item=>`<li>${escapeHtml(item)}</li>`).join('')}</ul>` : '<div class="panel-caption">No checklist available.</div>'}</div>
+      <div class="investigator-action"><strong>Recommended next action</strong><div style="margin-top:5px">${escapeHtml(inv.recommended_next_action || 'Route to merchant review.')}</div><div class="investigator-sub" style="line-height:1.55">${escapeHtml(inv.explanation || '')}</div></div>
+      ${guardrails.length ? `<div class="investigator-guardrails"><strong>Safety guardrails</strong><ul class="investigator-list">${guardrails.map(item=>`<li>${escapeHtml(item)}</li>`).join('')}</ul></div>` : ''}
+    </section>`;
+  }
+
+  function renderInvestigationOrchestrator(c) {
+    const events = Array.isArray(c.audit_log) ? c.audit_log : [];
+    const previousEvent = events.slice().reverse().find(event => event.action === 'INVESTIGATION_ORCHESTRATED');
+    const run = previousEvent && previousEvent.details && previousEvent.details.result
+      && typeof previousEvent.details.result === 'object' ? previousEvent.details.result : null;
+    const runButton = isCaseClosedStatus(c.status) ? '<div class="info-box">This case is closed; no new investigation run can be started.</div>' : '<button class="btn primary" id="run-investigation-btn" type="button">▶ Run investigation agent</button>';
+    if (!run) {
+      return `<section class="investigator-card" aria-label="Investigation Orchestrator">
+        <div class="investigator-head"><div><div class="investigator-title">✦ Investigation Orchestrator</div><div class="investigator-sub">Coordinates the existing read-only tools and policy preview.</div></div><span class="badge blue">Ready to run</span></div>
+        <div class="info-box">The bounded agent runs an adaptive sequence of registered read-only tools. It checks case/order context and evidence, and only checks carrier comparisons when relevant. It never accepts arbitrary tools, calls a carrier API, or changes case/payment state.</div>
+        <div class="form-footer">${runButton}</div>
+      </section>`;
+    }
+    const steps = Array.isArray(run.steps) ? run.steps : [];
+    const observations = Array.isArray(run.observations) ? run.observations : [];
+    const guardrails = Array.isArray(run.guardrails) ? run.guardrails : [];
+    const preview = run.policy_preview && typeof run.policy_preview === 'object' ? run.policy_preview : {};
+    const plannerTrace = Array.isArray(run.planner_trace) ? run.planner_trace : [];
+    const toolExecution = run.tool_execution && typeof run.tool_execution === 'object' ? run.tool_execution : {};
+    const badgeForStep = status => {
+      const s = String(status || 'UNKNOWN').toUpperCase();
+      const cls = s.includes('ATTENTION') || s.includes('ACTION_REQUIRED') || s.includes('HUMAN_REVIEW') ? 'amber'
+        : s.includes('SIMULATED') || s.includes('NOT_RUN') ? 'amber'
+        : s.includes('COMPLETED') ? 'green' : 'blue';
+      return `<span class="badge ${cls}">${escapeHtml(s.replaceAll('_',' '))}</span>`;
+    };
+    return `<section class="investigator-card" aria-label="Investigation Orchestrator">
+      <div class="investigator-head"><div><div class="investigator-title">✦ Investigation Orchestrator</div><div class="investigator-sub">Run ${escapeHtml(run.run_id || '')} · ${escapeHtml(dateLabel(run.ran_at))}</div></div><span class="badge green">Run completed</span></div>
+      <div class="investigator-sub">${escapeHtml(run.mode || 'Rules-first coordinated investigation')}</div>
+      <div class="info-box">Executed <strong>${escapeHtml(toolExecution.call_count ?? steps.length)}</strong> of <strong>${escapeHtml(toolExecution.max_tool_calls ?? 5)}</strong> allowed tool calls. Tools are selected from a fixed local registry; no arbitrary code or external action is run.</div>
+      <div class="detail-grid">
+        <div class="detail-tile"><div class="label">Saved policy</div><div class="value">${escapeHtml(run.saved_policy_decision || '—')}</div></div>
+        <div class="detail-tile"><div class="label">Read-only policy preview</div><div class="value">${escapeHtml(preview.decision || '—')}</div></div>
+      </div>
+      <div class="detail-section"><h3>Investigation steps and tool results</h3>${steps.length ? `<div class="timeline">${steps.map(step => `<div class="event"><div class="event-dot"></div><div><div class="event-title">${escapeHtml(step.label || step.tool || 'Investigation step')} ${badgeForStep(step.status)}</div><div class="event-details">${escapeHtml(step.result || '')}${step.call_number ? ` · Tool call ${escapeHtml(step.call_number)}` : ''}</div></div></div>`).join('')}</div>` : '<div class="panel-caption">No steps were recorded.</div>'}</div>
+      ${plannerTrace.length ? `<div class="detail-section"><h3>Adaptive planning trace</h3><ul class="reason-list">${plannerTrace.map(item => `<li><strong>${escapeHtml(item.event || 'PLANNER')}</strong>: ${escapeHtml(item.tool || '')} — ${escapeHtml(item.reason || '')}</li>`).join('')}</ul></div>` : ''}
+      <div class="detail-section"><h3>Findings</h3>${observations.length ? `<ul class="reason-list">${observations.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul>` : '<div class="panel-caption">No findings recorded.</div>'}</div>
+      <div class="investigator-action"><strong>Recommended next action</strong><div style="margin-top:5px">${escapeHtml(run.recommended_next_action || 'Request human review.')}</div></div>
+      ${guardrails.length ? `<div class="investigator-guardrails"><strong>Safety guardrails</strong><ul class="investigator-list">${guardrails.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul></div>` : ''}
+      <div class="info-box">This bounded tool-using run reads local records and previews deterministic policy only. It does not contact an external carrier, change case or order state, verify evidence, or approve/execute a refund.</div>
+      <div class="form-footer">${runButton}</div>
+    </section>`;
+  }
+
+  function renderEndToEndWorkflow(c) {
+    const events = Array.isArray(c.audit_log) ? c.audit_log : [];
+    const event = events.slice().reverse().find(item => item.action === 'END_TO_END_WORKFLOW_COORDINATED');
+    const workflow = event && event.details && typeof event.details.workflow === 'object' ? event.details.workflow : null;
+    const caseClosed = isCaseClosedStatus(c.status);
+    const runButton = caseClosed
+      ? '<span class="badge">Read-only: case closed</span>'
+      : '<button class="btn primary" type="button" id="coordinate-end-to-end-workflow-btn">▶ Coordinate end-to-end workflow</button>';
+    if (!workflow) {
+      return `<section class="investigator-card" aria-label="End-to-End Investigation Workflow">
+        <div class="investigator-head"><div><div class="investigator-title">↗ End-to-End Investigation Workflow</div><div class="investigator-sub">Coordinate the investigation stages using current saved case state.</div></div><span class="badge blue">Not coordinated yet</span></div>
+        <div class="info-box">This workflow brings the existing case, payment linkage, evidence, matching tracking snapshot, follow-up tasks, message drafts, and resolution summary into one ordered plan. It does not autonomously execute payment actions, send messages, verify evidence, or close the case.</div>
+        <div class="form-footer">${runButton}</div>
+      </section>`;
+    }
+    const stages = Array.isArray(workflow.stages) ? workflow.stages : [];
+    const trace = Array.isArray(workflow.decision_trace) ? workflow.decision_trace : [];
+    const guardrails = Array.isArray(workflow.guardrails) ? workflow.guardrails : [];
+    const next = workflow.next_safe_step && typeof workflow.next_safe_step === 'object' ? workflow.next_safe_step : {};
+    const statusClass = status => {
+      const s = String(status || 'UNKNOWN').toUpperCase();
+      if (['COMPLETED','READY_FOR_MERCHANT_REVIEW'].includes(s)) return 'green';
+      if (['BLOCKED','SIMULATED_ONLY','ACTION_REQUIRED','REVIEW_REQUIRED','READY_FOR_REVIEW'].includes(s)) return 'amber';
+      if (['PROTECTED','CLOSED','CLOSED_READ_ONLY','OPTIONAL','NOT_APPLICABLE','DRAFT_ONLY'].includes(s)) return 'blue';
+      return '';
+    };
+    const stageCards = stages.map(stage => `<div class="detail-tile" style="margin-top:10px">
+      <div class="form-footer"><div class="panel-title">${escapeHtml(stage.title || stage.stage_key || 'Workflow stage')}</div><span class="badge ${statusClass(stage.status)}">${escapeHtml(String(stage.status || 'UNKNOWN').replaceAll('_',' '))}</span></div>
+      <div class="small-muted">Stage: ${escapeHtml(stage.stage_key || '—')} · Owner: ${escapeHtml(stage.owner || '—')}${stage.blocks_resolution === false ? ' · Informational / optional' : ' · Resolution gate'}</div>
+      <div style="margin-top:8px;line-height:1.55">${escapeHtml(stage.summary || '')}</div>
+      ${stage.next_action ? `<div class="hint"><strong>Next action:</strong> ${escapeHtml(stage.next_action)}</div>` : ''}
+    </div>`).join('');
+    const countCards = Object.entries(workflow.stage_counts || {}).map(([name, count]) => `<div class="detail-tile"><div class="label">${escapeHtml(String(name).replaceAll('_',' '))}</div><div class="value">${escapeHtml(count)}</div></div>`).join('');
+    return `<section class="investigator-card" aria-label="End-to-End Investigation Workflow">
+      <div class="investigator-head"><div><div class="investigator-title">↗ End-to-End Investigation Workflow</div><div class="investigator-sub">${escapeHtml(workflow.workflow_id || '')} · ${escapeHtml(dateLabel(workflow.generated_at))}</div></div><span class="badge ${statusClass(workflow.overall_status)}">${escapeHtml(String(workflow.overall_status || 'UNKNOWN').replaceAll('_',' '))}</span></div>
+      <div class="investigator-sub">${escapeHtml(workflow.workflow_name || 'ResolveOS workflow')}</div>
+      <div class="detail-grid">
+        <div class="detail-tile"><div class="label">Saved policy</div><div class="value">${escapeHtml(workflow.saved_policy_decision || '—')}</div></div>
+        <div class="detail-tile"><div class="label">Active evidence</div><div class="value">${escapeHtml(workflow.active_evidence_id || 'None')}</div></div>
+        <div class="detail-tile"><div class="label">Matched tracking snapshot</div><div class="value">${escapeHtml(workflow.active_tracking_check_id || 'None')}</div><div class="small-muted">${escapeHtml(workflow.active_tracking_number || 'No matching tracking number')}</div></div>
+        <div class="detail-tile"><div class="label">Closure readiness</div><div class="value">${escapeHtml(workflow.closure_readiness || 'NOT_ASSESSED')}</div></div>
+      </div>
+      <div class="investigator-action"><strong>Next safe step: ${escapeHtml(next.title || 'Merchant review')}</strong><div style="margin-top:6px">${escapeHtml(next.instruction || 'Review the saved findings and follow the existing protected workflow.')}</div><div class="hint">Why: ${escapeHtml(next.reason || 'Based on saved local state.')}</div></div>
+      <div class="detail-section"><h3>Workflow stages (${stages.length})</h3>${stageCards || '<div class="panel-caption">No stages were recorded.</div>'}</div>
+      ${trace.length ? `<div class="detail-section"><h3>Workflow decision trace</h3><ul class="reason-list">${trace.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul></div>` : ''}
+      ${guardrails.length ? `<div class="investigator-guardrails"><strong>Guardrails</strong><ul class="investigator-list">${guardrails.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul></div>` : ''}
+      <div class="info-box">This workflow reads saved local state and records an assessment. It does not authenticate carrier sources, call external APIs, change case policy or order/shipping state, mark evidence verified, send customer messages, close a case, or execute/refund a payment.</div>
+      <div class="form-footer">${runButton}</div>
+    </section>`;
+  }
+
+  function renderFollowUpActionPlan(c) {
+    const actions = Array.isArray(c.follow_up_actions) ? c.follow_up_actions : [];
+    const openCount = actions.filter(a => ['OPEN','IN_PROGRESS'].includes(String(a.status || '').toUpperCase())).length;
+    const blockedCount = actions.filter(a => String(a.status || '').toUpperCase() === 'BLOCKED').length;
+    const doneCount = actions.filter(a => ['COMPLETED','AUTO_COMPLETED'].includes(String(a.status || '').toUpperCase())).length;
+    const refreshButton = isCaseClosedStatus(c.status) ? '' : '<button class="btn" type="button" id="refresh-follow-up-plan-btn">↻ Refresh action plan</button>';
+    if (!actions.length) {
+      return `<section class="investigator-card" aria-label="Investigation Follow-up Actions">
+        <div class="investigator-head"><div><div class="investigator-title">✓ Investigation Actions & Follow-up</div><div class="investigator-sub">A persistent checklist generated from the latest saved investigation state.</div></div><span class="badge blue">Not generated</span></div>
+        <div class="info-box">Generate a structured follow-up plan to assign the next steps, record progress, and keep prerequisite actions visible. This checklist does not change case policy or payment state.</div>
+        ${isCaseClosedStatus(c.status) ? '<div class="info-box">This case is closed; no new follow-up actions can be generated.</div>' : '<div class="form-footer"><button class="btn primary" type="button" id="refresh-follow-up-plan-btn">Generate follow-up plan</button></div>'}
+      </section>`;
+    }
+    const statusInfo = status => {
+      const normalized = String(status || 'OPEN').toUpperCase();
+      const cls = ['COMPLETED','AUTO_COMPLETED'].includes(normalized) ? 'green'
+        : normalized === 'BLOCKED' ? 'red' : normalized === 'IN_PROGRESS' ? 'blue' : 'amber';
+      return `<span class="badge ${cls}">${escapeHtml(normalized.replaceAll('_',' '))}</span>`;
+    };
+    const rows = actions.map(action => {
+      const status = String(action.status || 'OPEN').toUpperCase();
+      const completed = ['COMPLETED','AUTO_COMPLETED'].includes(status);
+      const gate = String(action.completion_gate || '').toUpperCase();
+      const safeId = escapeHtml(action.action_id || '');
+      let controls = '';
+      if (!isCaseClosedStatus(c.status) && (status === 'OPEN' || status === 'IN_PROGRESS')) {
+        if (gate === 'CASE_REEVALUATED') {
+          controls = `<div class="form-footer" style="margin-top:10px"><button class="btn primary" type="button" data-follow-up-reevaluate="${safeId}">Re-evaluate case</button></div><div class="hint">This action is completed automatically only when the existing deterministic re-evaluation succeeds.</div>`;
+        } else {
+          controls = `<div class="form-group" style="margin-top:10px"><label class="form-label" for="follow-up-note-${safeId}">Progress / completion note</label><textarea class="textarea" id="follow-up-note-${safeId}" rows="2" maxlength="1000" placeholder="Record what was done and what source or system state was checked"></textarea></div>
+            <div class="form-footer"><button class="btn" type="button" data-follow-up-action-id="${safeId}" data-follow-up-status="IN_PROGRESS">Mark in progress</button><button class="btn primary" type="button" data-follow-up-action-id="${safeId}" data-follow-up-status="COMPLETED">Complete action</button></div>`;
+        }
+      }
+      const blockedInfo = status === 'BLOCKED' ? `<div class="info-box"><strong>Blocked:</strong> ${escapeHtml(action.blocked_reason || 'Complete prerequisite actions and refresh the plan.')}</div>` : '';
+      const completionInfo = completed ? `<div class="event-details"><strong>${status === 'AUTO_COMPLETED' ? 'System-observed completion' : `Completed by ${escapeHtml(action.completed_by || 'merchant')}`}</strong>${action.completed_at ? ` · ${escapeHtml(dateLabel(action.completed_at))}` : ''}</div><div class="message-quote" style="margin-top:8px">${escapeHtml(action.completion_note || 'No completion note recorded.')}</div>` : '';
+      return `<div class="detail-tile" style="margin-top:12px">
+        <div class="form-footer"><div><div class="panel-title">${escapeHtml(action.title || action.action_key || 'Follow-up action')}</div><div class="small-muted">${safeId} · Assigned to ${escapeHtml(action.assigned_to || 'MERCHANT')} · Priority ${escapeHtml(action.priority || 'MEDIUM')}</div></div>${statusInfo(status)}</div>
+        <div style="margin-top:9px;line-height:1.55">${escapeHtml(action.description || '')}</div>
+        ${blockedInfo}${completionInfo}${controls}
+      </div>`;
+    }).join('');
+    return `<section class="investigator-card" aria-label="Investigation Follow-up Actions">
+      <div class="investigator-head"><div><div class="investigator-title">✓ Investigation Actions & Follow-up</div><div class="investigator-sub">Persistent tasks generated from investigation findings · source run ${escapeHtml(actions[0].source_run_id || '—')}</div></div><span class="badge ${blockedCount ? 'amber' : openCount ? 'blue' : 'green'}">${blockedCount ? 'Prerequisites blocked' : openCount ? 'Action required' : 'Plan complete'}</span></div>
+      <div class="detail-grid">
+        <div class="detail-tile"><div class="label">Open / in progress</div><div class="value">${openCount}</div></div>
+        <div class="detail-tile"><div class="label">Blocked</div><div class="value">${blockedCount}</div></div>
+        <div class="detail-tile"><div class="label">Completed</div><div class="value">${doneCount}</div></div>
+        <div class="detail-tile"><div class="label">Total actions</div><div class="value">${actions.length}</div></div>
+      </div>
+      <div class="info-box">Actions are persisted and audited. Completing a task records a merchant note or checks a specific saved-state prerequisite; it never changes payment eligibility by itself. Simulated tracking remains demo data.</div>
+      ${rows}
+      ${isCaseClosedStatus(c.status) ? '<div class="info-box">This case is closed. Follow-up tasks are read-only.</div>' : `<div class="form-footer" style="margin-top:12px">${refreshButton}</div>`}
+    </section>`;
+  }
+
+  function renderCustomerMessageDrafts(c) {
+    const drafts = Array.isArray(c.customer_message_drafts) ? c.customer_message_drafts : [];
+    const caseClosed = isCaseClosedStatus(c.status);
+    const draftCards = drafts.map(draft => {
+      const id = escapeHtml(draft.draft_id || '');
+      const status = String(draft.status || 'DRAFT').toUpperCase();
+      const locked = status !== 'DRAFT' || caseClosed;
+      return `<div class="detail-tile" style="margin-top:12px">
+        <div class="form-footer"><div><div class="panel-title">${escapeHtml(draft.draft_type || 'Customer follow-up draft').replaceAll('_',' ')}</div><div class="small-muted">${id} · Created by ${escapeHtml(draft.created_by || 'merchant')} · ${escapeHtml(dateLabel(draft.created_at))}</div></div><span class="badge blue">${escapeHtml(status)}</span></div>
+        <div class="form-group" style="margin-top:12px"><label class="form-label" for="customer-message-draft-subject-${id}">Subject</label><input class="field" id="customer-message-draft-subject-${id}" maxlength="180" value="${escapeHtml(draft.subject || '')}" ${locked ? 'disabled' : ''}></div>
+        <div class="form-group"><label class="form-label" for="customer-message-draft-body-${id}">Message draft</label><textarea class="textarea" id="customer-message-draft-body-${id}" rows="9" maxlength="5000" ${locked ? 'disabled' : ''}>${escapeHtml(draft.body || '')}</textarea><div class="hint">Edit the wording before saving or copying. This message has not been sent.</div></div>
+        <div class="form-footer"><button class="btn" type="button" data-copy-customer-message-draft="${id}">Copy message</button>${locked ? '' : `<button class="btn primary" type="button" data-save-customer-message-draft="${id}">Save edits</button>`}</div>
+      </div>`;
+    }).join('');
+    return `<section class="investigator-card" aria-label="Customer Follow-up Message Composer">
+      <div class="investigator-head"><div><div class="investigator-title">✉ Customer Follow-up Message Composer</div><div class="investigator-sub">Creates an issue-specific message draft from the case; the merchant reviews it before using it.</div></div><span class="badge blue">Draft only</span></div>
+      <div class="info-box">ResolveOS does not send email, SMS, or chat messages. Review every draft, edit it as needed, then copy it to your chosen support channel yourself. Draft creation and editing do not alter case policy, evidence verification, shipping, or payment state.</div>
+      ${caseClosed ? '<div class="info-box">This case is closed; message drafts are read-only.</div>' : '<div class="form-footer"><button class="btn primary" type="button" id="generate-customer-message-draft-btn">✦ Generate customer follow-up draft</button></div>'}
+      ${draftCards || '<div class="empty">No customer message drafts yet. Generate a draft to request the information appropriate for this complaint type.</div>'}
+    </section>`;
+  }
+
+  function legacyVerificationWarning(record) {
+    const note = String(record.review_note || '').toLowerCase().replace(/\s+/g, ' ').trim();
+    const values = record.evidence && typeof record.evidence === 'object' ? record.evidence : {};
+    const source = String(values.source_reference || '').toLowerCase();
+    const contradictory = [
+      'test only', 'test data only', 'demo only', 'placeholder', 'dummy data',
+      'fake data', 'no verifiable evidence', 'no verifiable proof', 'not verifiable',
+      'not verified', 'could not verify', 'cannot verify', 'unable to verify',
+      'no real evidence', 'not actual evidence', 'not real carrier evidence', 'unverified information'
+    ].some(phrase => note.includes(phrase));
+    const placeholderSource = !source || source.includes('example.com/test-evidence') ||
+      /https?:\/\/(example\.(com|org|net|test)|[^/]+\.example)(\/|$)/i.test(source);
+    const placeholderPayload = ['tracking_number','latest_carrier_scan','carrier_investigation','evidence_notes']
+      .some(key => /test only|test data only|demo only|placeholder|dummy data|fake data|not actual evidence|no real evidence/i.test(String(values[key] || '')));
+    return contradictory ? 'The original review note contradicts the VERIFIED status.'
+      : placeholderSource ? 'No usable official source was recorded, or the source appears to be a placeholder.'
+      : placeholderPayload ? 'One or more fields contain explicit test or placeholder data.' : '';
+  }
+
+  function renderEvidenceCollection(c) {
+    const records = Array.isArray(c.evidence_records) ? c.evidence_records : [];
+    const trackingChecks = Array.isArray(c.carrier_tracking_checks) ? c.carrier_tracking_checks : [];
+    const latest = {};
+    records.slice().reverse().forEach(record => {
+      const values = record && record.evidence && typeof record.evidence === 'object' ? record.evidence : {};
+      Object.entries(values).forEach(([key, value]) => { latest[key] = value; });
+    });
+    const labels = {
+      tracking_number: 'Tracking number',
+      carrier_slug: 'Carrier code',
+      latest_carrier_scan: 'Latest carrier scan',
+      expected_delivery_date: 'Expected delivery date',
+      delivery_address_confirmed: 'Delivery address confirmed',
+      carrier_investigation: 'Carrier investigation / loss confirmation',
+      evidence_notes: 'Additional evidence notes',
+      source_reference: 'HTTPS source reference'
+    };
+    const locked = isCaseClosedStatus(c.status) || ['REFUND_SUBMITTING','REFUND_PENDING','REFUND_COMPLETED','REFUND_REQUIRES_RECONCILIATION'].includes(c.status)
+      || ['PENDING','COMPLETED'].includes(String(c.refund_status || '').toUpperCase())
+      || Boolean(c.paypal_refund_id);
+    const history = records.length ? `<div class="timeline">${records.map(record => {
+      const values = record.evidence && typeof record.evidence === 'object' ? record.evidence : {};
+      const items = Object.entries(values).map(([key, value]) => {
+        const display = key === 'delivery_address_confirmed' ? (value ? 'Yes' : 'No') : String(value ?? '');
+        return `<li><strong>${escapeHtml(labels[key] || key.replaceAll('_',' '))}:</strong> ${escapeHtml(display)}</li>`;
+      }).join('');
+      const verification = String(record.verification_status || 'SUBMITTED_UNVERIFIED').toUpperCase();
+      const integrityReason = verification === 'VERIFIED' ? legacyVerificationWarning(record) : '';
+      const legacyVerified = verification === 'VERIFIED' && Boolean(integrityReason);
+      const verificationClass = verification === 'VERIFICATION_REVOKED' || verification === 'REJECTED' ? 'red' : legacyVerified ? 'amber' : verification === 'VERIFIED' ? 'green' : 'amber';
+      const verificationLabel = verification === 'VERIFICATION_REVOKED' ? 'VERIFICATION REVOKED' : legacyVerified ? 'VERIFIED · CORRECTION REQUIRED' : verification.replaceAll('_',' ');
+      const legacyVerifiedWarning = legacyVerified
+        ? `<div class="info-box">Historical verification needs correction: ${escapeHtml(integrityReason)} This record is excluded from the current verified count until corrected. ResolveOS does not independently authenticate evidence.</div>` : '';
+      const reviewMeta = verification !== 'SUBMITTED_UNVERIFIED'
+        ? `<div class="event-time">Originally reviewed by ${escapeHtml(record.reviewed_by || 'merchant')} · ${escapeHtml(dateLabel(record.reviewed_at))}</div><div class="event-details"><strong>Original review note:</strong> ${escapeHtml(record.review_note || 'No review note recorded.')}</div>`
+        : '';
+      const revocationMeta = verification === 'VERIFICATION_REVOKED'
+        ? `<div class="info-box">Verification revoked by ${escapeHtml(record.verification_revoked_by || 'merchant')} · ${escapeHtml(dateLabel(record.verification_revoked_at))}<div style="margin-top:5px"><strong>Correction reason:</strong> ${escapeHtml(record.verification_revocation_note || 'No correction note recorded.')}</div><div class="hint">The previous VERIFIED status and original review note are preserved in the audit history. This record no longer counts as verified.</div></div>` : '';
+      const revocationControls = !locked && legacyVerified ? `
+        <div class="detail-section">
+          <label class="form-label" for="evidence-revoke-note-${escapeHtml(record.evidence_id)}">Audit correction reason (required)</label>
+          <textarea class="textarea" id="evidence-revoke-note-${escapeHtml(record.evidence_id)}" rows="2" maxlength="1000">Historical review note says test-only/unverified evidence; revoke the VERIFIED label pending a new evidence review.</textarea>
+          <div class="form-footer" style="margin-top:8px"><button class="btn danger" type="button" data-revoke-verification="${escapeHtml(record.evidence_id)}">Revoke verification</button></div>
+        </div>` : '';
+      const trackingButton = !locked && String(values.tracking_number || '').trim() ? `
+        <div class="form-footer" style="margin-top:8px">
+          <button class="btn" type="button" data-refresh-tracking="${escapeHtml(record.evidence_id)}">↻ Fetch / simulate tracking</button>
+        </div>` : '';
+      const reviewControls = !locked && verification === 'SUBMITTED_UNVERIFIED' ? `
+        <div class="detail-section">
+          <label class="form-label" for="evidence-review-note-${escapeHtml(record.evidence_id)}">Review note (required)</label>
+          <textarea class="textarea" id="evidence-review-note-${escapeHtml(record.evidence_id)}" rows="2" maxlength="1000" placeholder="Explain what was checked and why this evidence is accepted or rejected"></textarea>
+          <div class="form-footer" style="margin-top:8px">
+            <button class="btn primary" type="button" data-review-evidence="${escapeHtml(record.evidence_id)}" data-review-decision="VERIFIED">Mark verified</button>
+            <button class="btn danger" type="button" data-review-evidence="${escapeHtml(record.evidence_id)}" data-review-decision="REJECTED">Reject evidence</button>
+          </div>
+        </div>` : '';
+      return `<div class="event"><div class="event-dot"></div><div><div class="event-title">${escapeHtml(record.evidence_id || 'Evidence submission')} <span class="badge ${verificationClass}">${escapeHtml(verificationLabel)}</span></div><div class="event-time">Submitted by ${escapeHtml(record.submitted_by || 'MERCHANT')} · ${escapeHtml(dateLabel(record.created_at))}</div><ul class="reason-list">${items}</ul>${values.source_reference ? `<div class="event-details"><strong>Source reference:</strong> ${escapeHtml(values.source_reference)}</div>` : ''}${legacyVerifiedWarning}${trackingButton}${reviewMeta}${revocationMeta}${revocationControls}${reviewControls}</div></div>`;
+    }).join('')}</div>` : '<div class="panel-caption">No evidence submitted yet.</div>';
+    const addressSelection = latest.delivery_address_confirmed === true ? 'true' : latest.delivery_address_confirmed === false ? 'false' : '';
+    return `<section class="investigator-card" aria-label="Evidence collection and re-evaluation">
+      <div class="investigator-head"><div><div class="investigator-title">Evidence Collection</div><div class="investigator-sub">Submit details, then re-evaluate the case against the current order and payment state.</div></div><span class="badge amber">Merchant review</span></div>
+      <div class="info-box"><strong>No-cost tracking demo is enabled by default.</strong> The Fetch / simulate tracking button generates visibly labelled simulated status and checkpoint data locally. No AfterShip account, API key, or payment is needed for demo mode. Simulated results are not real carrier evidence.</div>
+      <div class="info-box">Submitted information is saved to the audit trail as <strong>unverified</strong>. Entering a tracking number or note never changes shipping facts or authorizes a refund by itself.</div>
+      ${renderLatestCarrierComparison(trackingChecks)}
+      ${locked ? '<div class="info-box">Evidence updates are locked because a refund has been submitted or completed. Review the recorded PayPal refund state instead.</div>' : `
+      <form id="evidence-form" class="detail-section">
+        <div class="detail-grid">
+          <div><label class="form-label" for="evidence-tracking-number">Tracking number</label><input class="field" id="evidence-tracking-number" maxlength="120" value="${escapeHtml(latest.tracking_number || '')}" placeholder="Carrier tracking ID"></div>
+          <div><label class="form-label" for="evidence-carrier-slug">Carrier code (optional)</label><input class="field" id="evidence-carrier-slug" maxlength="80" value="${escapeHtml(latest.carrier_slug || '')}" placeholder="ups, fedex, dhl"><div class="hint">In no-cost demo mode this is just a label. It does not trigger a real carrier lookup.</div></div>
+          <div><label class="form-label" for="evidence-expected-date">Expected delivery date</label><input class="field" id="evidence-expected-date" type="date" value="${escapeHtml(latest.expected_delivery_date || '')}"></div>
+          <div><label class="form-label" for="evidence-address-confirmed">Delivery address confirmed?</label><select id="evidence-address-confirmed"><option value="" ${addressSelection === '' ? 'selected' : ''}>Not recorded</option><option value="true" ${addressSelection === 'true' ? 'selected' : ''}>Yes, confirmed</option><option value="false" ${addressSelection === 'false' ? 'selected' : ''}>No / mismatch reported</option></select></div>
+          <div><label class="form-label" for="evidence-source-reference">Official source URL (HTTPS)</label><input class="field" id="evidence-source-reference" type="url" maxlength="500" value="${escapeHtml(latest.source_reference || '')}" placeholder="https://official-carrier.example/tracking"><div class="hint">Required to mark evidence verified. The merchant must open and check the source; ResolveOS does not fetch it.</div></div>
+          <div><label class="form-label" for="evidence-latest-scan">Latest carrier scan (include timestamp)</label><textarea class="textarea" id="evidence-latest-scan" rows="2" maxlength="1500" placeholder="Paste the latest scan text and timestamp">${escapeHtml(latest.latest_carrier_scan || '')}</textarea></div>
+          <div><label class="form-label" for="evidence-carrier-investigation">Carrier investigation / loss confirmation</label><textarea class="textarea" id="evidence-carrier-investigation" rows="2" maxlength="1500" placeholder="Reference or summary, if available">${escapeHtml(latest.carrier_investigation || '')}</textarea></div>
+          <div><label class="form-label" for="evidence-notes">Additional evidence notes</label><textarea class="textarea" id="evidence-notes" rows="2" maxlength="3000" placeholder="What was checked and what remains unknown">${escapeHtml(latest.evidence_notes || '')}</textarea></div>
+        </div>
+        <div id="evidence-feedback" class="hidden" role="status"></div>
+        <div class="form-footer"><button class="btn primary" type="submit" id="save-evidence-btn">Save evidence</button><button class="btn" type="button" id="reevaluate-case-btn">Re-evaluate case</button></div>
+        <div class="hint">These actions require the merchant authorization key entered below the case details. To mark missing-delivery evidence VERIFIED, provide an HTTPS source URL, a timestamped carrier scan, and a valid YYYY-MM-DD expected date, then truthfully confirm the source in the review note. ResolveOS does not independently authenticate carrier data. Re-evaluation uses deterministic policy rules; the AI classifier does not approve payments.</div>
+      </form>`}
+      <div class="detail-section"><h3>Evidence submission history</h3>${history}</div>
+      <div class="detail-section"><h3>Carrier tracking history</h3>${renderCarrierTrackingChecks(trackingChecks)}</div>
+      <div class="hint">Default mode is simulated demo data and requires no payment or API key. It is clearly labelled and must not be treated as real evidence. Optional live mode requires an account with AfterShip Tracking API access, AFTERSHIP_API_KEY, and CARRIER_TRACKING_MODE=aftership in backend/.env. Live access may require a paid plan. Tracking results never trigger a refund or silently change the local order state.</div>
+    </section>`;
+  }
+
+  function renderLatestCarrierComparison(checks) {
+    if (!checks.length) {
+      return `<div class="detail-section comparison-panel"><h3>Carrier Evidence Comparison</h3><div class="info-box">No saved tracking comparison yet. Save a tracking number, then click <strong>Fetch / simulate tracking</strong>. The latest status/date comparison will appear here.</div></div>`;
+    }
+    const check = checks[0];
+    const cmp = check.comparison && typeof check.comparison === 'object' ? check.comparison : {};
+    const isSimulated = check.source_mode === 'SIMULATED_DEMO' || String(check.provider || '').toUpperCase().includes('SIMULATED');
+    const differs = cmp.shipping_status_comparison === 'DIFFERENT_REVIEW_REQUIRED' || cmp.delivery_date_comparison === 'DIFFERENT_REVIEW_REQUIRED';
+    const hasAllMatches = cmp.shipping_status_comparison === 'MATCH' && cmp.delivery_date_comparison === 'MATCH';
+    const outcome = cmp.overall_result || (isSimulated
+      ? (differs ? 'SIMULATED_DISCREPANCY' : hasAllMatches ? 'SIMULATED_NO_DIFFERENCE' : 'SIMULATED_INSUFFICIENT_DATA')
+      : (differs ? 'POTENTIAL_DISCREPANCY' : hasAllMatches ? 'NO_DIFFERENCE_DETECTED' : 'INSUFFICIENT_DATA'));
+    const outcomeLabel = ({
+      SIMULATED_DISCREPANCY: 'Simulated discrepancy scenario',
+      SIMULATED_NO_DIFFERENCE: 'Simulated fields match',
+      SIMULATED_INSUFFICIENT_DATA: 'Simulated · insufficient data',
+      POTENTIAL_DISCREPANCY: 'Potential discrepancy · review required',
+      NO_DIFFERENCE_DETECTED: 'No difference detected',
+      INSUFFICIENT_DATA: 'Insufficient data to compare'
+    })[outcome] || String(outcome).replaceAll('_',' ');
+    const outcomeClass = outcome.includes('DISCREPANCY') || outcome.includes('INSUFFICIENT') ? 'amber' : (outcome.includes('MATCH') || outcome === 'NO_DIFFERENCE_DETECTED' || outcome === 'SIMULATED_NO_DIFFERENCE') ? 'green' : 'blue';
+    const statusLabel = value => String(value || 'NOT_COMPARABLE').replaceAll('_', ' ');
+    const localStatus = cmp.local_shipping_status || (isSimulated ? 'Local order status not available' : 'UNKNOWN');
+    const providerStatus = cmp.provider_shipping_status || check.tracking_status || 'UNKNOWN';
+    const merchantDate = cmp.merchant_expected_delivery_date || '—';
+    const providerDate = cmp.provider_estimated_delivery_date || check.estimated_delivery_date || '—';
+    let findings = Array.isArray(cmp.findings) ? cmp.findings : [];
+    if (!findings.length) {
+      if (cmp.shipping_status_comparison === 'DIFFERENT_REVIEW_REQUIRED') findings.push(`Status differs: local order says ${localStatus}; tracking snapshot says ${providerStatus}.`);
+      else if (cmp.shipping_status_comparison === 'MATCH') findings.push(`Status matches for the fields compared: ${localStatus}.`);
+      if (cmp.delivery_date_comparison === 'DIFFERENT_REVIEW_REQUIRED') findings.push(`Dates differ: merchant-entered ${merchantDate}; tracking estimate ${providerDate}.`);
+      else if (cmp.delivery_date_comparison === 'MATCH') findings.push(`Dates match: ${merchantDate}.`);
+      if (!findings.length) findings.push('There is not enough comparable information to describe a match or difference.');
+      if (isSimulated) findings.unshift('SIMULATED DATA ONLY: generated locally for a demo; no real carrier was contacted.');
+    }
+    const summary = cmp.overall_summary || (isSimulated
+      ? (differs ? 'The demo scenario intentionally illustrates a potential difference. This does not say anything about the real shipment.' : 'This is simulated data and cannot confirm the real shipment.')
+      : (differs ? 'One or more fields differ. Manually inspect the official carrier source; this is a review signal, not proof.' : 'Review the source and the compared fields before drawing a conclusion.'));
+    return `<div class="detail-section comparison-panel">
+      <div class="panel-header" style="padding:12px 0;border-bottom:0"><div><div class="panel-title">Carrier Evidence Comparison</div><div class="panel-caption">Latest result for ${escapeHtml(check.tracking_number || '')} · ${escapeHtml(check.check_id || '')}</div></div><span class="badge ${outcomeClass}">${escapeHtml(outcomeLabel)}</span></div>
+      <div class="message-quote">${escapeHtml(summary)}</div>
+      <div class="detail-grid">
+        <div class="detail-tile"><div class="label">Local order status</div><div class="value">${escapeHtml(localStatus)}</div></div>
+        <div class="detail-tile"><div class="label">Tracking snapshot status</div><div class="value">${escapeHtml(providerStatus)}</div><div class="small-muted">${escapeHtml(statusLabel(cmp.shipping_status_comparison))}</div></div>
+        <div class="detail-tile"><div class="label">Merchant expected date</div><div class="value">${escapeHtml(merchantDate)}</div></div>
+        <div class="detail-tile"><div class="label">Tracking estimated date</div><div class="value">${escapeHtml(providerDate)}</div><div class="small-muted">${escapeHtml(statusLabel(cmp.delivery_date_comparison))}</div></div>
+      </div>
+      <div class="detail-section"><h3>What the comparison means</h3><ul class="reason-list">${findings.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul></div>
+      ${isSimulated ? '<div class="info-box"><strong>SIMULATED DEMO ONLY.</strong> These values were generated locally. The discrepancy is intentionally synthetic and does not establish anything about the real shipment.</div>' : ''}
+      <div class="info-box">Human review required. This comparison does not authenticate the tracking source, change order status, re-evaluate the case automatically, or authorize a refund.</div>
+    </div>`;
+  }
+
+  function renderCarrierTrackingChecks(checks) {
+    if (!checks.length) return '<div class="panel-caption">No carrier lookups or demo simulations have been run for this case yet.</div>'; 
+    return `<div class="timeline">${checks.map(check => {
+      const cp = check.latest_checkpoint && typeof check.latest_checkpoint === 'object' ? check.latest_checkpoint : {};
+      const cmp = check.comparison && typeof check.comparison === 'object' ? check.comparison : {};
+      const statusClassName = value => value === 'MATCH' ? 'green' : value === 'DIFFERENT_REVIEW_REQUIRED' ? 'amber' : '';
+      const statusLabel = value => String(value || 'NOT_COMPARABLE').replaceAll('_', ' ');
+      const checkpointText = [cp.message, cp.location].filter(Boolean).map(String).join(' · ');
+      const checkpointTime = cp.checkpoint_time || '';
+      const courierLink = typeof check.courier_tracking_link === 'string' && check.courier_tracking_link.startsWith('https://')
+        ? `<div class="event-details"><a href="${escapeHtml(check.courier_tracking_link)}" target="_blank" rel="noopener noreferrer">Open carrier tracking source ↗</a></div>` : '';
+      return `<div class="event"><div class="event-dot"></div><div><div class="event-title">${escapeHtml(check.check_id || 'Tracking check')} · ${escapeHtml(check.provider || 'Carrier provider')}</div>
+        <div class="event-time">Checked ${escapeHtml(dateLabel(check.checked_at))} · ${escapeHtml(check.tracking_number || '')}</div>
+        <div class="detail-grid">
+          <div class="detail-tile"><div class="label">Carrier status</div><div class="value">${escapeHtml(check.tracking_status || 'Unknown')}</div><div class="small-muted">${escapeHtml(check.carrier_name || check.carrier_slug || '')}</div></div>
+          <div class="detail-tile"><div class="label">Latest message</div><div class="value">${escapeHtml(check.status_message || 'No status message')}</div><div class="small-muted">${escapeHtml(check.lookup_state || '')}</div></div>
+          <div class="detail-tile"><div class="label">Status comparison</div><div class="value"><span class="badge ${statusClassName(cmp.shipping_status_comparison)}">${escapeHtml(statusLabel(cmp.shipping_status_comparison))}</span></div><div class="small-muted">Local: ${escapeHtml(cmp.local_shipping_status || 'UNKNOWN')} · Provider: ${escapeHtml(cmp.provider_shipping_status || 'UNKNOWN')}</div></div>
+          <div class="detail-tile"><div class="label">Delivery-date comparison</div><div class="value"><span class="badge ${statusClassName(cmp.delivery_date_comparison)}">${escapeHtml(statusLabel(cmp.delivery_date_comparison))}</span></div><div class="small-muted">Entered: ${escapeHtml(cmp.merchant_expected_delivery_date || '—')} · Provider: ${escapeHtml(cmp.provider_estimated_delivery_date || '—')}</div></div>
+        </div>
+        ${checkpointTime || checkpointText ? `<div class="message-quote"><strong>Latest carrier checkpoint</strong><div>${escapeHtml(checkpointText || 'Checkpoint returned without a description.')}</div><div class="small-muted">${escapeHtml(dateLabel(checkpointTime))}</div></div>` : '<div class="info-box">No checkpoint returned yet. AfterShip may still be waiting for a carrier update.</div>'}
+        ${courierLink}<div class="hint">${escapeHtml(cmp.scan_review_note || 'Review carrier results manually.')}</div>
+        ${check.source_mode === 'SIMULATED_DEMO' || String(check.provider || '').includes('SIMULATED') ? '<div class="info-box"><strong>SIMULATED DEMO DATA — NOT FROM A REAL CARRIER.</strong> This result was generated locally only to demonstrate tracking comparison. It must not be presented as genuine shipping evidence or used to make a real payment decision.</div>' : ''}
+        <div class="info-box">Human review required. This lookup is reference data and does not itself establish delivery, loss, eligibility, or refund approval.</div>
+      </div></div>`;
+    }).join('')}</div>`;
+  }
+  function setEvidenceFeedback(message, type) {
+    const node = document.getElementById('evidence-feedback');
+    if (!node) { showToast(message, type === 'error'); return; }
+    node.className = `${type}-box`;
+    node.textContent = message;
+  }
+  async function saveEvidence(event, caseId) {
+    event.preventDefault();
+    const key = el('admin-key').value.trim();
+    if (!key) { setEvidenceFeedback('Enter the merchant authorization key below the case details before saving evidence.', 'error'); el('admin-key').focus(); return; }
+    const fieldValue = id => el(id).value.trim();
+    const addressValue = el('evidence-address-confirmed').value;
+    const body = {
+      tracking_number: fieldValue('evidence-tracking-number') || null,
+      carrier_slug: fieldValue('evidence-carrier-slug').toLowerCase() || null,
+      expected_delivery_date: fieldValue('evidence-expected-date') || null,
+      delivery_address_confirmed: addressValue === '' ? null : addressValue === 'true',
+      latest_carrier_scan: fieldValue('evidence-latest-scan') || null,
+      carrier_investigation: fieldValue('evidence-carrier-investigation') || null,
+      evidence_notes: fieldValue('evidence-notes') || null,
+      source_reference: fieldValue('evidence-source-reference') || null
+    };
+    const hasValue = Object.entries(body).some(([keyName, value]) => keyName === 'delivery_address_confirmed' ? value !== null : Boolean(value));
+    if (!hasValue) { setEvidenceFeedback('Enter at least one field before saving evidence.', 'error'); return; }
+    const button = el('save-evidence-btn'); button.disabled = true; button.textContent = 'Saving…';
+    try {
+      await api(`/cases/${encodeURIComponent(caseId)}/evidence`, {method:'POST', headers:{'X-Admin-Key':key}, body:JSON.stringify(body)});
+      await refreshAll();
+      showToast('Evidence saved as unverified and added to the case audit trail.');
+    } catch (error) {
+      setEvidenceFeedback(`Could not save evidence: ${error.message}`, 'error');
+      button.disabled = false; button.textContent = 'Save evidence';
+    }
+  }
+  async function reviewEvidence(caseId, evidenceId, decision, button) {
+    const key = el('admin-key').value.trim();
+    if (!key) {
+      showToast('Enter the merchant authorization key below the case details before reviewing evidence.', true);
+      el('admin-key').focus();
+      return;
+    }
+    const noteNode = el(`evidence-review-note-${evidenceId}`);
+    const reviewNote = noteNode ? noteNode.value.trim() : '';
+    if (reviewNote.length < 5) {
+      showToast('Enter a review note of at least five characters.', true);
+      if (noteNode) noteNode.focus();
+      return;
+    }
+    const originalText = button.textContent;
+    button.disabled = true;
+    button.textContent = decision === 'VERIFIED' ? 'Verifying…' : 'Rejecting…';
+    try {
+      const result = await api(
+        `/cases/${encodeURIComponent(caseId)}/evidence/${encodeURIComponent(evidenceId)}/review`,
+        {method:'POST', headers:{'X-Admin-Key':key}, body:JSON.stringify({decision, review_note:reviewNote})}
+      );
+      await refreshAll();
+      showToast(`${evidenceId} marked ${decision.toLowerCase()}. No payment action was taken.`);
+    } catch (error) {
+      showToast(`Could not review evidence: ${error.message}`, true);
+      button.disabled = false;
+      button.textContent = originalText;
+    }
+  }
+  async function revokeEvidenceVerification(caseId, evidenceId, button) {
+    const key = el('admin-key').value.trim();
+    if (!key) {
+      showToast('Enter the merchant authorization key below the case details before correcting evidence verification.', true);
+      el('admin-key').focus();
+      return;
+    }
+    const noteNode = el(`evidence-revoke-note-${evidenceId}`);
+    const reason = noteNode ? noteNode.value.trim() : '';
+    if (reason.length < 12) {
+      showToast('Enter an audit correction reason of at least 12 characters.', true);
+      if (noteNode) noteNode.focus();
+      return;
+    }
+    if (!window.confirm(`Revoke the historical VERIFIED status for ${evidenceId}? The original review note and audit events will be preserved.`)) return;
+    const originalText = button.textContent;
+    button.disabled = true;
+    button.textContent = 'Revoking…';
+    try {
+      const result = await api(
+        `/cases/${encodeURIComponent(caseId)}/evidence/${encodeURIComponent(evidenceId)}/revoke-verification`,
+        {method:'POST', headers:{'X-Admin-Key':key}, body:JSON.stringify({reason})}
+      );
+      await refreshAll();
+      showToast(result.message || `${evidenceId} verification revoked. No payment action was taken.`);
+    } catch (error) {
+      showToast(`Could not revoke verification: ${error.message}`, true);
+      button.disabled = false;
+      button.textContent = originalText;
+    }
+  }
+
+  async function refreshCarrierTracking(caseId, evidenceId, button) {
+    const key = el('admin-key').value.trim();
+    if (!key) {
+      showToast('Enter the merchant authorization key below the case details before fetching tracking.', true);
+      el('admin-key').focus();
+      return;
+    }
+    const originalText = button.textContent;
+    button.disabled = true;
+    button.textContent = 'Fetching tracking…';
+    try {
+      const result = await api(`/cases/${encodeURIComponent(caseId)}/evidence/${encodeURIComponent(evidenceId)}/tracking-refresh`, {
+        method: 'POST', headers: {'X-Admin-Key': key}
+      });
+      await refreshAll();
+      showToast(result.message || 'Carrier tracking result saved. No payment action was taken.');
+    } catch (error) {
+      showToast(`Carrier tracking lookup failed: ${error.message}`, true);
+      button.disabled = false;
+      button.textContent = originalText;
+    }
+  }
+
+  async function refreshFollowUpPlan(caseId, button) {
+    const key = el('admin-key').value.trim();
+    if (!key) { showToast('Enter the merchant authorization key below the case details to generate or refresh the follow-up plan.', true); el('admin-key').focus(); return; }
+    const originalText = button.textContent;
+    button.disabled = true; button.textContent = 'Refreshing plan…';
+    try {
+      const result = await api(`/cases/${encodeURIComponent(caseId)}/follow-up-actions/refresh`, {method:'POST', headers:{'X-Admin-Key':key}});
+      await refreshAll();
+      showToast(result.message || 'Follow-up plan refreshed. No payment action was taken.');
+    } catch (error) {
+      showToast(`Could not refresh follow-up plan: ${error.message}`, true);
+      button.disabled = false; button.textContent = originalText;
+    }
+  }
+
+  async function updateFollowUpAction(caseId, actionId, status, button) {
+    const key = el('admin-key').value.trim();
+    if (!key) { showToast('Enter the merchant authorization key below the case details to update a follow-up action.', true); el('admin-key').focus(); return; }
+    const noteNode = el(`follow-up-note-${actionId}`);
+    const note = noteNode ? noteNode.value.trim() : '';
+    if (note.length < 12) { showToast('Enter a meaningful note of at least 12 characters.', true); if (noteNode) noteNode.focus(); return; }
+    const originalText = button.textContent;
+    button.disabled = true; button.textContent = status === 'COMPLETED' ? 'Completing…' : 'Updating…';
+    try {
+      const result = await api(`/cases/${encodeURIComponent(caseId)}/follow-up-actions/${encodeURIComponent(actionId)}/update`, {
+        method:'POST', headers:{'X-Admin-Key':key}, body:JSON.stringify({status, note})
+      });
+      await refreshAll();
+      showToast(result.message || 'Follow-up action updated. No payment action was taken.');
+    } catch (error) {
+      showToast(`Could not update ${actionId}: ${error.message}`, true);
+      button.disabled = false; button.textContent = originalText;
+    }
+  }
+
+  async function generateCustomerMessageDraft(caseId, button) {
+    const key = el('admin-key').value.trim();
+    if (!key) { showToast('Enter the merchant authorization key below the case details to generate a draft.', true); el('admin-key').focus(); return; }
+    const originalText = button.textContent;
+    button.disabled = true; button.textContent = 'Generating draft…';
+    try {
+      const result = await api(`/cases/${encodeURIComponent(caseId)}/customer-message-drafts`, {
+        method: 'POST', headers: {'X-Admin-Key': key}
+      });
+      await refreshAll();
+      showToast(result.message || 'Draft generated and saved. It has not been sent.');
+    } catch (error) {
+      showToast(`Could not generate customer draft: ${error.message}`, true);
+      button.disabled = false; button.textContent = originalText;
+    }
+  }
+
+  async function saveCustomerMessageDraft(caseId, draftId, button) {
+    const key = el('admin-key').value.trim();
+    if (!key) { showToast('Enter the merchant authorization key below the case details to save draft edits.', true); el('admin-key').focus(); return; }
+    const subjectNode = el(`customer-message-draft-subject-${draftId}`);
+    const bodyNode = el(`customer-message-draft-body-${draftId}`);
+    const subject = subjectNode ? subjectNode.value.trim() : '';
+    const body = bodyNode ? bodyNode.value.trim() : '';
+    if (subject.length < 4 || body.length < 10) { showToast('Enter a subject (at least 4 characters) and a message (at least 10 characters).', true); return; }
+    const originalText = button.textContent;
+    button.disabled = true; button.textContent = 'Saving…';
+    try {
+      const result = await api(`/cases/${encodeURIComponent(caseId)}/customer-message-drafts/${encodeURIComponent(draftId)}`, {
+        method: 'PUT', headers: {'X-Admin-Key': key}, body: JSON.stringify({subject, body})
+      });
+      await refreshAll();
+      showToast(result.message || 'Draft edits saved. The message has not been sent.');
+    } catch (error) {
+      showToast(`Could not save draft edits: ${error.message}`, true);
+      button.disabled = false; button.textContent = originalText;
+    }
+  }
+
+  async function copyCustomerMessageDraft(draftId) {
+    const subjectNode = el(`customer-message-draft-subject-${draftId}`);
+    const bodyNode = el(`customer-message-draft-body-${draftId}`);
+    const subject = subjectNode ? subjectNode.value.trim() : '';
+    const body = bodyNode ? bodyNode.value.trim() : '';
+    if (!subject || !body) { showToast('There is no complete draft to copy.', true); return; }
+    const text = `Subject: ${subject}\n\n${body}`;
+    try {
+      await navigator.clipboard.writeText(text);
+      showToast('Draft copied to clipboard. Review it before manually sending; ResolveOS did not send anything.');
+    } catch (error) {
+      showToast('Clipboard access was blocked by the browser. Select the subject and message text manually to copy it.', true);
+    }
+  }
+
+  async function generateResolutionSummary(caseId, button) {
+    const key = el('admin-key').value.trim();
+    if (!key) { showToast('Enter the merchant authorization key below the case details to generate a resolution summary.', true); el('admin-key').focus(); return; }
+    const originalText = button.textContent;
+    button.disabled = true; button.textContent = 'Generating summary…';
+    try {
+      const result = await api(`/cases/${encodeURIComponent(caseId)}/resolution-summary`, {
+        method: 'POST', headers: {'X-Admin-Key': key}
+      });
+      await refreshAll();
+      showToast(result.message || 'Resolution summary saved. The case remains open and no payment action was taken.');
+    } catch (error) {
+      showToast(`Could not generate resolution summary: ${error.message}`, true);
+      button.disabled = false; button.textContent = originalText;
+    }
+  }
+
+  async function closeResolutionCase(event, caseId) {
+    event.preventDefault();
+    const key = el('admin-key').value.trim();
+    if (!key) { showToast('Enter the merchant authorization key below the case details to close a case.', true); el('admin-key').focus(); return; }
+    const outcome = el('resolution-closure-outcome')?.value || '';
+    const note = el('resolution-closure-note')?.value.trim() || '';
+    if (!outcome || note.length < 12) { showToast('Choose a closure outcome and enter a meaningful note of at least 12 characters.', true); return; }
+    const labels = {
+      RESOLVED_REFUND_COMPLETED: 'resolved after a completed refund',
+      RESOLVED_NO_REFUND: 'resolved without a refund',
+      ESCALATED: 'closed as escalated / handed off',
+      CUSTOMER_WITHDREW: 'closed because the customer withdrew',
+      DUPLICATE_CASE: 'closed as a duplicate'
+    };
+    if (!confirm(`Close case ${caseId} as ${labels[outcome]}? This is a case workflow action only and will not execute a payment.`)) return;
+    const button = document.getElementById('close-resolution-case-btn');
+    if (button) { button.disabled = true; button.textContent = 'Closing case…'; }
+    try {
+      const result = await api(`/cases/${encodeURIComponent(caseId)}/close`, {
+        method: 'POST', headers: {'X-Admin-Key': key},
+        body: JSON.stringify({closure_outcome: outcome, closure_note: note})
+      });
+      await refreshAll();
+      showToast(result.message || 'Case closure recorded. No payment action was executed.');
+    } catch (error) {
+      showToast(`Case was not closed: ${error.message}`, true);
+      if (button) { button.disabled = false; button.textContent = 'Close case with selected outcome'; }
+    }
+  }
+
+  async function coordinateEndToEndWorkflow(caseId, button) {
+    const key = el('admin-key').value.trim();
+    if (!key) {
+      showToast('Enter your merchant ADMIN_API_KEY below the case details to coordinate the workflow.', true);
+      el('admin-key').focus();
+      return;
+    }
+    if (button) { button.disabled = true; button.textContent = 'Coordinating workflow…'; }
+    try {
+      const result = await api(`/cases/${encodeURIComponent(caseId)}/workflow/coordinate`, {
+        method: 'POST', headers: {'X-Admin-Key': key}
+      });
+      await refreshAll();
+      showToast(result.message || 'End-to-end workflow coordinated. No case or payment action was taken.');
+    } catch (error) {
+      showToast(`Workflow coordination failed: ${error.message}`, true);
+      if (button) { button.disabled = false; button.textContent = '▶ Coordinate end-to-end workflow'; }
+    }
+  }
+
+  async function runInvestigation(caseId, button) {
+    const key = el('admin-key').value.trim();
+    if (!key) {
+      showToast('Enter your merchant ADMIN_API_KEY below the case details to run and audit an investigation.', true);
+      el('admin-key').focus();
+      return;
+    }
+    if (button) { button.disabled = true; button.textContent = 'Running investigation…'; }
+    try {
+      const result = await api(`/cases/${encodeURIComponent(caseId)}/investigation/run`, {
+        method: 'POST', headers: {'X-Admin-Key': key}
+      });
+      await refreshAll();
+      showToast(result.message || 'Investigation run completed. No case or payment action was taken.');
+    } catch (error) {
+      showToast(`Investigation run failed: ${error.message}`, true);
+      if (button) { button.disabled = false; button.textContent = '▶ Run investigation agent'; }
+    }
+  }
+
+  async function reevaluateCase(caseId) {
+    const key = el('admin-key').value.trim();
+    if (!key) { showToast('Enter the merchant authorization key below the case details before re-evaluating.', true); el('admin-key').focus(); return; }
+    const button = document.getElementById('reevaluate-case-btn'); if (button) { button.disabled = true; button.textContent = 'Re-evaluating…'; }
+    try {
+      const result = await api(`/cases/${encodeURIComponent(caseId)}/reevaluate`, {method:'POST', headers:{'X-Admin-Key':key}});
+      await refreshAll();
+      showToast(`Case re-evaluated. Policy: ${result.policy_decision}; status: ${result.status}. No payment action was taken.`);
+    } catch (error) {
+      showToast(`Case re-evaluation failed: ${error.message}`, true);
+      if (button) { button.disabled = false; button.textContent = 'Re-evaluate case'; }
+    }
+  }
+  function auditSummary(details) {
+    if (!details || typeof details !== 'object') return '';
+    const keys = ['run_id','agent_name','recommended_next_action','issue_type','policy_decision','previous_decision','new_decision','capture_id','request_id','refund_id','refund_status','evidence_id','check_id','provider','source_mode','provider_status','lookup_state','shipping_status_comparison','delivery_date_comparison','evidence_submission_count','verification_status','reviewed_by','review_note','verification_revoked_by','verification_revoked_at','verification_revocation_note','previous_status','new_status','detected_integrity_problem','original_reviewed_by','original_reviewed_at','correction_reason','fields','error','reason','note','action_id','action_key','status','assigned_to','completion_gate','action_count','open_count','blocked_count','summary_id','closure_outcome','case_status','blocker_count'];
+    const parts = keys.filter(k => details[k] !== undefined).map(k => `${k.replaceAll('_',' ')}: ${Array.isArray(details[k]) ? details[k].join(', ') : details[k]}`);
+    if (details.amount && details.amount.value) parts.push(`amount: ${details.amount.value} ${details.amount.currency_code || ''}`);
+    return parts.join(' · ') || 'Event recorded';
+  }
+  async function approveRefund(caseId) {
+    const key = el('admin-key').value.trim();
+    if (!key) { showToast('Enter the merchant ADMIN_API_KEY in the authorization field before approving.', true); el('admin-key').focus(); return; }
+    if (!confirm(`Approve the Sandbox refund for case ${caseId}? Only proceed for a test order.`)) return;
+    const button = document.getElementById('approve-refund-btn'); if (button) button.disabled = true;
+    try {
+      const result = await api(`/cases/${encodeURIComponent(caseId)}/approve-refund`, {method:'POST', headers:{'X-Admin-Key':key}});
+      showToast(`Refund request returned ${result.refund_status || result.status}. Refreshing case details.`);
+      await refreshAll(); await openCase(caseId);
+    } catch(error) {
+      showToast(`Refund was not confirmed: ${error.message}`, true);
+      if (button) button.disabled = false;
+    }
+  }
+  async function createCase(event) {
+    event.preventDefault();
+    const orderId = el('order-select').value;
+    const message = el('customer-message').value.trim();
+    if (!orderId || message.length < 5) { setFeedback('Choose an order and enter a customer message of at least five characters.','error'); return; }
+    const button = el('create-case-btn'); button.disabled = true; button.textContent = 'Investigating…';
+    try {
+      const result = await api('/cases',{method:'POST',body:JSON.stringify({order_id:orderId,customer_message:message})});
+      el('customer-message').value = '';
+      setFeedback(`Case ${result.case_id} created. Decision: ${result.policy_decision}. Status: ${result.status}.`,'success');
+      await refreshAll(); await openCase(result.case_id);
+      showToast(`Investigation created: ${result.case_id}`);
+    } catch(error) {
+      setFeedback(`Could not create case: ${error.message}`,'error');
+    } finally { button.disabled = false; button.textContent = '✦ Investigate complaint'; }
+  }
+  async function refreshAll() {
+    try {
+      const [health, orders, cases] = await Promise.all([api('/health'), api('/orders'), api('/cases')]);
+      if (!health || health.status !== 'ok') throw new Error('ResolveOS health check did not return ok.');
+      state.orders = Array.isArray(orders) ? orders : [];
+      state.cases = Array.isArray(cases) ? cases : [];
+      renderKPIs(); renderOrders(); renderOrderOptions(); renderCases();
+      if (state.selectedCaseId) {
+        const exists = state.cases.some(c => c.case_id === state.selectedCaseId);
+        if (exists) await openCase(state.selectedCaseId);
+      }
+    } catch(error) {
+      showToast(`Dashboard could not load data: ${error.message}`, true);
+      el('cases-table-body').innerHTML = `<tr><td colspan="5" class="empty">${escapeHtml(error.message)}<br>Confirm the FastAPI server is running and that the updated /cases endpoint is installed.</td></tr>`;
+    }
+  }
+  document.querySelectorAll('[data-scroll]').forEach(button => button.addEventListener('click', () => {
+    document.querySelectorAll('[data-scroll]').forEach(b => b.classList.toggle('active', b === button));
+    const target = document.getElementById(button.dataset.scroll); if (target) target.scrollIntoView({behavior:'smooth',block:'start'});
+  }));
+  el('cases-table-body').addEventListener('click', (event) => {
+    const button = event.target.closest('[data-open-case]'); if (button) openCase(button.dataset.openCase);
+  });
+  el('new-case-form').addEventListener('submit', createCase);
+  el('refresh-btn').addEventListener('click', refreshAll);
+  el('case-search').addEventListener('input', renderCases);
+  el('status-filter').addEventListener('change', renderCases);
+  el('clear-admin-key').addEventListener('click', () => { el('admin-key').value=''; showToast('Admin key cleared from this page.'); });
+  refreshAll();
+})();
+</script>
+</body>
+</html>

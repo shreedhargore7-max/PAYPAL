@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>ResolveOS | Merchant Command Center</title>
+  <style>
+    :root{--ink:#15253d;--muted:#66758a;--line:#e2e8f0;--panel:#fff;--bg:#f4f7fb;--navy:#152b49;--blue:#2563eb;--blue-soft:#eaf1ff;--green:#147d56;--green-soft:#e7f8ef;--amber:#9a5b06;--amber-soft:#fff3da;--red:#b42318;--red-soft:#fff0ef;--shadow:0 8px 28px rgba(24,44,75,.06)}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:14px}button,input,textarea,select{font:inherit}button{cursor:pointer}a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}.layout{min-height:100vh;display:grid;grid-template-columns:242px minmax(0,1fr)}
+    aside{background:var(--navy);color:#fff;padding:24px 16px;display:flex;flex-direction:column;gap:28px}.brand{display:flex;align-items:center;gap:11px;padding:0 10px}.brand-icon{width:39px;height:39px;border-radius:12px;background:#dbeafe;color:#1d4ed8;display:grid;place-items:center;font-weight:900;font-size:19px}.brand-name{font-size:18px;font-weight:800;letter-spacing:-.04em}.brand-sub{color:#b9c8dc;font-size:11px;margin-top:3px}.nav-label{color:#91a7c2;font-size:10px;font-weight:800;letter-spacing:.14em;padding:0 13px;text-transform:uppercase}.nav{display:grid;gap:6px}.nav button{border:0;background:transparent;color:#d7e2f0;text-align:left;padding:12px 13px;border-radius:10px;display:flex;align-items:center;gap:12px}.nav button.active,.nav button:hover{background:#2a4161;color:white}.nav .glyph{font-size:18px;width:20px;text-align:center}.aside-foot{margin-top:auto;border-top:1px solid #344963;padding:18px 10px 2px;color:#a9bad0;font-size:12px;line-height:1.55}.sandbox-dot{display:inline-block;width:7px;height:7px;background:#45d39a;border-radius:99px;margin-right:7px}
+    main{min-width:0;padding:30px clamp(18px,3vw,42px) 48px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:27px}.eyebrow{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.13em;font-weight:800}.page-title{font-size:28px;letter-spacing:-.04em;margin:6px 0 0;font-weight:800}.subheading{color:var(--muted);margin-top:7px;line-height:1.5}.top-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.pill{display:inline-flex;align-items:center;gap:7px;padding:8px 11px;border-radius:99px;background:#fff;border:1px solid var(--line);font-size:12px;font-weight:700;color:#42536a}.pill.sandbox{color:var(--green);background:var(--green-soft);border-color:#c7efd9}.btn{border:1px solid var(--line);border-radius:9px;padding:10px 13px;background:#fff;color:var(--ink);font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:7px}.btn:hover{background:#f8fafc}.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}.btn.primary:hover{background:#1d4ed8}.btn.danger{background:var(--red);border-color:var(--red);color:#fff}.btn:disabled{opacity:.55;cursor:not-allowed}.grid-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;margin-bottom:22px}.kpi{background:var(--panel);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:14px;padding:18px}.kpi-top{display:flex;justify-content:space-between;align-items:center;gap:8px;color:var(--muted);font-weight:650;font-size:12px}.kpi-icon{background:#f0f5ff;color:#2558ae;border-radius:9px;width:34px;height:34px;display:grid;place-items:center;font-size:17px}.kpi-value{font-size:29px;letter-spacing:-.05em;font-weight:800;margin-top:15px}.kpi-note{color:var(--muted);font-size:11px;margin-top:5px}
+    .content-grid{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(300px,.95fr);gap:18px;align-items:start}.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);min-width:0}.panel-header{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;padding:20px 20px 16px;border-bottom:1px solid var(--line)}.panel-title{font-size:15px;font-weight:800;letter-spacing:-.02em}.panel-caption{color:var(--muted);font-size:12px;margin-top:5px;line-height:1.45}.filters{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.field,select,textarea{background:#fff;color:var(--ink);border:1px solid #d5deea;border-radius:9px;padding:10px 11px;outline:none;width:100%}.field:focus,select:focus,textarea:focus{border-color:#8ab0ff;box-shadow:0 0 0 3px #dbeafe}.filters select{width:auto;max-width:170px;font-size:12px;padding:9px}.filters input{max-width:190px;font-size:12px;padding:9px}.table-wrap{width:100%;overflow:auto}table{width:100%;border-collapse:collapse;text-align:left;white-space:nowrap}th{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#74839a;font-weight:800;background:#fbfcfe;padding:12px 16px;border-bottom:1px solid var(--line)}td{padding:15px 16px;border-bottom:1px solid #edf1f6;font-size:12px}tbody tr:hover{background:#f9fbff}tbody tr:last-child td{border-bottom:0}.case-id{font-weight:800;color:#203653}.case-sub{color:var(--muted);font-size:11px;margin-top:4px;max-width:210px;overflow:hidden;text-overflow:ellipsis}.order-label{font-weight:750}.small-muted{color:var(--muted);font-size:11px;margin-top:4px}.badge{display:inline-flex;align-items:center;gap:5px;border-radius:99px;padding:6px 8px;font-size:10px;font-weight:800;background:#eef2f7;color:#506078;white-space:nowrap}.badge.green{background:var(--green-soft);color:var(--green)}.badge.amber{background:var(--amber-soft);color:var(--amber)}.badge.red{background:var(--red-soft);color:var(--red)}.badge.blue{background:var(--blue-soft);color:#2454ae}.empty{padding:30px 20px;color:var(--muted);text-align:center;line-height:1.6}.right-column{display:grid;gap:18px}.form-body{padding:19px 20px 21px}.form-label{display:block;font-weight:750;font-size:12px;margin:0 0 7px}.form-group{margin-bottom:15px}.hint{color:var(--muted);font-size:11px;line-height:1.5;margin-top:6px}.textarea{min-height:102px;resize:vertical}.form-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.error-box,.success-box,.info-box{padding:11px 12px;border-radius:9px;font-size:12px;line-height:1.5;margin:12px 0}.error-box{background:var(--red-soft);color:var(--red);border:1px solid #ffd4d1}.success-box{background:var(--green-soft);color:var(--green);border:1px solid #c7efd9}.info-box{background:#f0f5ff;color:#365982;border:1px solid #d7e5ff}.hidden{display:none!important}.detail-panel{margin-top:18px}.detail-body{padding:20px}.detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}.detail-tile{padding:13px;background:#f8fafd;border:1px solid #e8edf4;border-radius:10px;min-width:0}.detail-tile .label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-weight:800}.detail-tile .value{font-weight:800;margin-top:7px;overflow-wrap:anywhere}.detail-section{margin-top:18px}.detail-section h3{font-size:12px;margin:0 0 9px}.reason-list{margin:0;padding-left:18px;color:#52637a;line-height:1.65;font-size:12px}.message-quote{padding:14px 15px;background:#f8fafd;border-left:3px solid #8ab0ff;border-radius:0 9px 9px 0;line-height:1.6}.timeline{display:grid;gap:12px}.event{display:grid;grid-template-columns:10px minmax(0,1fr);gap:10px}.event-dot{width:8px;height:8px;background:#3b82f6;border-radius:100%;margin-top:5px;box-shadow:0 0 0 4px #e8f0ff}.event-title{font-size:11px;font-weight:800}.event-time{font-size:10px;color:var(--muted);margin-top:3px}.event-details{font-size:11px;color:#53647a;margin-top:4px;overflow-wrap:anywhere}.order-list{display:grid}.order-row{padding:14px 18px;display:flex;gap:10px;align-items:center;border-bottom:1px solid #edf1f6}.order-row:last-child{border-bottom:0}.order-icon{width:36px;height:36px;display:grid;place-items:center;border-radius:10px;background:#f0f5ff;color:#2454ae;font-size:17px;flex-shrink:0}.order-main{flex:1;min-width:0}.order-name{font-size:12px;font-weight:800;overflow:hidden;text-overflow:ellipsis}.order-meta{font-size:11px;color:var(--muted);margin-top:4px}.order-right{text-align:right}.order-amount{font-weight:800;font-size:12px}.admin-auth{padding:16px 18px;background:#f8fafd;border-top:1px solid var(--line);border-radius:0 0 14px 14px}.admin-auth label{display:block;font-size:11px;font-weight:800;margin-bottom:7px}.admin-row{display:flex;gap:8px}.admin-row input{min-width:0}.admin-note{font-size:10px;color:var(--muted);line-height:1.5;margin-top:8px}.footer-note{margin-top:20px;color:#7c8ba0;font-size:11px;text-align:center}.toast{position:fixed;right:22px;bottom:22px;max-width:min(430px,calc(100vw - 44px));background:#172b47;color:white;border-radius:12px;padding:14px 16px;box-shadow:0 16px 40px #172b4733;z-index:50;line-height:1.5}.toast.error{background:#9d251f}.mobile-brand{display:none}
+    @media(max-width:1150px){.layout{grid-template-columns:205px minmax(0,1fr)}.content-grid{grid-template-columns:minmax(0,1fr)}.right-column{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}.grid-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:720px){.layout{display:block}aside{display:none}main{padding:20px 14px 36px}.topbar{align-items:flex-start;flex-direction:column}.page-title{font-size:24px}.grid-kpis{gap:9px}.kpi{padding:13px}.kpi-value{font-size:25px}.right-column{grid-template-columns:minmax(0,1fr)}.panel-header{padding:16px;flex-direction:column}.filters{width:100%}.filters input,.filters select{max-width:none;flex:1;min-width:110px}.detail-grid{grid-template-columns:1fr 1fr}.table-wrap{overflow-x:auto}td,th{padding:12px}.top-actions{width:100%;justify-content:space-between}.admin-row{flex-direction:column}}
+  </style>
+</head>
+<body>
+<div class="layout">
+  <aside>
+    <div class="brand"><div class="brand-icon">R</div><div><div class="brand-name">ResolveOS</div><div class="brand-sub">Payment resolution AI</div></div></div>
+    <div><div class="nav-label">Workspace</div><div class="nav"><button class="active" type="button" data-scroll="overview"><span class="glyph">▦</span>Overview</button><button type="button" data-scroll="cases-panel"><span class="glyph">◫</span>Case queue</button><button type="button" data-scroll="orders-panel"><span class="glyph">▣</span>Orders & payments</button><button type="button" data-scroll="detail-panel"><span class="glyph">◷</span>Audit timeline</button></div></div>
+    <div class="aside-foot"><span class="sandbox-dot"></span><strong>Sandbox environment</strong><br>Test data only. No real money should move through these demo transactions.</div>
+  </aside>
+  <main id="overview">
+    <header class="topbar">
+      <div><div class="eyebrow">Merchant workspace / Overview</div><h1 class="page-title">Payment resolution command center</h1><div class="subheading">Investigate customer complaints, review evidence, and control merchant-approved actions.</div></div>
+      <div class="top-actions"><span class="pill sandbox"><span class="sandbox-dot"></span>PayPal Sandbox</span><button class="btn" id="refresh-btn" type="button">↻ Refresh data</button></div>
+    </header>
+    <div class="grid-kpis">
+      <section class="kpi"><div class="kpi-top"><span>Cases in queue</span><span class="kpi-icon">◫</span></div><div class="kpi-value" id="kpi-total">—</div><div class="kpi-note">Recorded investigations</div></section>
+      <section class="kpi"><div class="kpi-top"><span>Awaiting approval</span><span class="kpi-icon">✋</span></div><div class="kpi-value" id="kpi-approval">—</div><div class="kpi-note">Merchant action required</div></section>
+      <section class="kpi"><div class="kpi-top"><span>Refunds completed</span><span class="kpi-icon">✓</span></div><div class="kpi-value" id="kpi-refunds">—</div><div class="kpi-note">Confirmed by PayPal response</div></section>
+      <section class="kpi"><div class="kpi-top"><span>Orders monitored</span><span class="kpi-icon">▣</span></div><div class="kpi-value" id="kpi-orders">—</div><div class="kpi-note">Demo merchant records</div></section>
+    </div>
+    <div class="content-grid">
+      <section class="panel" id="cases-panel">
+        <div class="panel-header"><div><div class="panel-title">Investigation queue</div><div class="panel-caption">Select a case to inspect the reasoning and audit history.</div></div><div class="filters"><input id="case-search" type="search" placeholder="Search case or order" aria-label="Search cases"><select id="status-filter" aria-label="Filter by status"><option value="all">All statuses</option><option value="AWAITING_MERCHANT_APPROVAL">Awaiting approval</option><option value="REFUND_COMPLETED">Refund completed</option><option value="NEEDS_HUMAN_REVIEW">Human review</option><option value="AWAITING_CAPTURE_LINK">Missing capture</option><option value="REFUND_REQUIRES_RECONCILIATION">Reconciliation</option></select></div></div>
+        <div class="table-wrap"><table><thead><tr><th>Case</th><th>Order</th><th>Status</th><th>Confidence</th><th></th></tr></thead><tbody id="cases-table-body"><tr><td colspan="5" class="empty">Loading case queue…</td></tr></tbody></table></div>
+      </section>
+      <div class="right-column">
+        <section class="panel" id="new-case-panel"><div class="panel-header"><div><div class="panel-title">Investigate a complaint</div><div class="panel-caption">Create a new AI-assisted support case.</div></div><span class="badge blue">AI agent</span></div>
+          <form class="form-body" id="new-case-form">
+            <div class="form-group"><label class="form-label" for="order-select">Related order</label><select id="order-select" required><option value="">Loading orders…</option></select></div>
+            <div class="form-group"><label class="form-label" for="customer-message">Customer message</label><textarea class="textarea" id="customer-message" minlength="5" maxlength="3000" required placeholder="Example: I was charged, but my order never shipped. Can you help?"></textarea><div class="hint">The agent classifies the complaint and applies the demo policy. Payment actions still require backend checks and merchant approval.</div></div>
+            <div id="new-case-feedback" class="hidden" role="status"></div><button class="btn primary" type="submit" id="create-case-btn">✦ Investigate complaint</button>
+          </form>
+        </section>
+        <section class="panel" id="orders-panel"><div class="panel-header"><div><div class="panel-title">Orders & payment state</div><div class="panel-caption">Seeded demo evidence paired with PayPal capture state.</div></div></div><div class="order-list" id="orders-list"><div class="empty">Loading orders…</div></div></section>
+      </div>
+    </div>
+    <section class="panel detail-panel" id="detail-panel"><div class="panel-header"><div><div class="panel-title">Case detail & audit trail</div><div class="panel-caption" id="detail-caption">Choose a case in the investigation queue to review its evidence.</div></div><div id="detail-status"></div></div><div class="detail-body" id="case-detail-body"><div class="empty">No case selected yet. Select a case above after data loads.</div></div><div class="admin-auth"><label for="admin-key">Merchant authorization key</label><div class="admin-row"><input class="field" type="password" id="admin-key" autocomplete="off" placeholder="Enter ADMIN_API_KEY for this session only"><button class="btn" id="clear-admin-key" type="button">Clear</button></div><div class="admin-note">Used only in this browser tab for the approve-refund request. This dashboard does not save the key to localStorage. Keep your key private. Only use approval actions against your local Sandbox test data.</div></div></section>
+    <div class="footer-note">ResolveOS prototype · PayPal Sandbox only · AI recommends; backend policy and merchant authorization control payment actions.</div>
+  </main>
+</div>
+<div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+<script>
+(() => {
+  const state = { orders: [], cases: [], selectedCaseId: null, selectedCase: null, busy: false };
+  const el = (id) => document.getElementById(id);
+  let toastTimer;
+
+  function escapeHtml(value) {
+    return String(value ?? '').replace(/[&<>"']/g, (ch) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  }
+  function money(amount, currency='USD') {
+    const n = Number(amount);
+    if (!Number.isFinite(n)) return `${escapeHtml(amount)} ${escapeHtml(currency)}`;
+    try { return new Intl.NumberFormat(undefined, {style:'currency', currency}).format(n); }
+    catch { return `${n.toFixed(2)} ${currency}`; }
+  }
+  function dateLabel(value) {
+    if (!value) return '—';
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? value : date.toLocaleString();
+  }
+  function statusClass(status) {
+    const s = String(status || '').toUpperCase();
+    if (s.includes('COMPLETED') || s === 'REFUNDED') return 'green';
+    if (s.includes('AWAITING') || s.includes('PENDING') || s.includes('SUBMITTING')) return 'amber';
+    if (s.includes('RECONCILIATION') || s.includes('HUMAN_REVIEW') || s.includes('NEEDS_MORE')) return 'red';
+    if (s.includes('CANDIDATE')) return 'blue';
+    return '';
+  }
+  function badge(status) {
+    return `<span class="badge ${statusClass(status)}">${escapeHtml(String(status || 'UNKNOWN').replaceAll('_',' '))}</span>`;
+  }
+  function showToast(message, isError=false) {
+    const box = el('toast'); box.textContent = message; box.className = `toast${isError ? ' error' : ''}`;
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => box.classList.add('hidden'), 5200);
+  }
+  async function api(path, options={}) {
+    const headers = new Headers(options.headers || {});
+    if (options.body && !headers.has('Content-Type')) headers.set('Content-Type','application/json');
+    const response = await fetch(path, {...options, headers});
+    const text = await response.text();
+    let data = null;
+    try { data = text ? JSON.parse(text) : null; } catch { data = {detail:text || response.statusText}; }
+    if (!response.ok) {
+      const detail = data && (data.detail || data.message) ? (data.detail || data.message) : `Request failed (${response.status})`;
+      const error = new Error(typeof detail === 'string' ? detail : JSON.stringify(detail));
+      error.status = response.status; throw error;
+    }
+    return data;
+  }
+  function caseRows() {
+    const search = el('case-search').value.trim().toLowerCase();
+    const status = el('status-filter').value;
+    return state.cases.filter(c => {
+      const haystack = `${c.case_id} ${c.order_id} ${c.issue_type} ${c.summary} ${c.customer_message}`.toLowerCase();
+      return (!search || haystack.includes(search)) && (status === 'all' || c.status === status);
+    });
+  }
+  function renderCases() {
+    const rows = caseRows(); const body = el('cases-table-body');
+    if (!rows.length) {
+      body.innerHTML = `<tr><td colspan="5" class="empty">${state.cases.length ? 'No cases match these filters.' : 'No cases yet. Create the first investigation using the form.'}</td></tr>`;
+      return;
+    }
+    body.innerHTML = rows.map(c => `<tr>
+      <td><div class="case-id">${escapeHtml(c.case_id)}</div><div class="case-sub" title="${escapeHtml(c.summary)}">${escapeHtml(c.summary || c.customer_message || '')}</div></td>
+      <td><div class="order-label">${escapeHtml(c.order_id)}</div><div class="small-muted">${escapeHtml(c.issue_type || 'OTHER')}</div></td>
+      <td>${badge(c.status)}</td><td>${Math.round((Number(c.confidence)||0)*100)}%</td>
+      <td><button class="btn" type="button" data-open-case="${escapeHtml(c.case_id)}">Review</button></td>
+    </tr>`).join('');
+  }
+  function renderOrders() {
+    const list = el('orders-list');
+    if (!state.orders.length) { list.innerHTML = '<div class="empty">No orders were returned by the API.</div>'; return; }
+    list.innerHTML = state.orders.map(o => `<div class="order-row">
+      <div class="order-icon">▣</div><div class="order-main"><div class="order-name">${escapeHtml(o.item_name)} · ${escapeHtml(o.order_id)}</div><div class="order-meta">Shipping: ${escapeHtml(o.shipping_status)} · Payment: ${escapeHtml(o.payment_status)}</div><div class="order-meta">${o.paypal_capture_id ? 'Capture linked' : 'No capture linked'} · Refund: ${escapeHtml(o.refund_status || 'NONE')}</div></div>
+      <div class="order-right"><div class="order-amount">${money(o.amount,o.currency)}</div>${o.paypal_capture_id ? '<span class="badge green">Captured</span>' : `<a class="small-muted" href="/checkout/${encodeURIComponent(o.order_id)}" target="_blank" rel="noopener">Open checkout ↗</a>`}</div>
+    </div>`).join('');
+  }
+  function renderKPIs() {
+    el('kpi-total').textContent = state.cases.length;
+    el('kpi-approval').textContent = state.cases.filter(c => c.status === 'AWAITING_MERCHANT_APPROVAL').length;
+    el('kpi-refunds').textContent = state.cases.filter(c => c.status === 'REFUND_COMPLETED' || c.refund_status === 'COMPLETED').length;
+    el('kpi-orders').textContent = state.orders.length;
+  }
+  function renderOrderOptions() {
+    const select = el('order-select');
+    const previous = select.value;
+    select.innerHTML = `<option value="">Choose an order…</option>` + state.orders.map(o => `<option value="${escapeHtml(o.order_id)}">${escapeHtml(o.order_id)} — ${escapeHtml(o.item_name)} (${money(o.amount,o.currency)})</option>`).join('');
+    if (state.orders.some(o => o.order_id === previous)) select.value = previous;
+  }
+  function setFeedback(message, type) {
+    const node = el('new-case-feedback'); node.className = `${type}-box`; node.textContent = message;
+  }
+  async function openCase(caseId) {
+    state.selectedCaseId = caseId;
+    el('case-detail-body').innerHTML = '<div class="empty">Loading case details…</div>';
+    el('detail-caption').textContent = `Loading ${caseId}`;
+    try {
+      const c = await api(`/cases/${encodeURIComponent(caseId)}`);
+      state.selectedCase = c; renderCaseDetail(c);
+      document.querySelectorAll('[data-open-case]').forEach(b => b.classList.toggle('primary', b.dataset.openCase === caseId));
+    } catch (error) {
+      el('case-detail-body').innerHTML = `<div class="error-box">${escapeHtml(error.message)}</div>`;
+      showToast(`Could not load case: ${error.message}`, true);
+    }
+  }
+  function renderCaseDetail(c) {
+    const order = c.order || state.orders.find(o => o.order_id === c.order_id) || {};
+    el('detail-caption').textContent = `${c.case_id} · ${c.order_id} · Last updated ${dateLabel(c.updated_at)}`;
+    el('detail-status').innerHTML = badge(c.status);
+    const canApprove = c.status === 'AWAITING_MERCHANT_APPROVAL' && c.policy_decision === 'REFUND_CANDIDATE';
+    const reasons = Array.isArray(c.reasons) ? c.reasons : [];
+    const events = Array.isArray(c.audit_log) ? c.audit_log : [];
+    el('case-detail-body').innerHTML = `
+      <div class="form-footer"><div><div class="panel-title">${escapeHtml(c.issue_type || 'Support issue').replaceAll('_',' ')}</div><div class="panel-caption">AI confidence: ${Math.round((Number(c.confidence)||0)*100)}% · Policy: ${escapeHtml(c.policy_decision || '—')}</div></div>
+      ${canApprove ? '<button class="btn primary" id="approve-refund-btn" type="button">✓ Approve $'+escapeHtml(order.amount || '')+' refund</button>' : (c.status === 'REFUND_COMPLETED' ? '<span class="badge green">Refund complete</span>' : '')}</div>
+      <div class="detail-grid">
+        <div class="detail-tile"><div class="label">Order amount</div><div class="value">${money(order.amount || '—',order.currency || 'USD')}</div></div>
+        <div class="detail-tile"><div class="label">Shipping state</div><div class="value">${escapeHtml(order.shipping_status || '—')}</div></div>
+        <div class="detail-tile"><div class="label">Payment capture</div><div class="value">${order.paypal_capture_id ? escapeHtml(order.paypal_capture_id) : 'Not linked'}</div></div>
+        <div class="detail-tile"><div class="label">Refund state</div><div class="value">${escapeHtml(c.refund_status || order.refund_status || 'NONE')}</div></div>
+      </div>
+      <div class="detail-section"><h3>Customer message</h3><div class="message-quote">${escapeHtml(c.customer_message || 'No message supplied.')}</div></div>
+      <div class="detail-section"><h3>Investigation summary</h3><div class="panel-caption" style="font-size:13px;color:#40536c">${escapeHtml(c.summary || '')}</div></div>
+      <div class="detail-section"><h3>Policy reasons</h3>${reasons.length ? `<ul class="reason-list">${reasons.map(r=>`<li>${escapeHtml(r)}</li>`).join('')}</ul>` : '<div class="panel-caption">No policy reasons recorded.</div>'}</div>
+      <div class="detail-section"><h3>Audit timeline</h3>${events.length ? `<div class="timeline">${events.slice().reverse().map(e=>`<div class="event"><div class="event-dot"></div><div><div class="event-title">${escapeHtml(e.action)} <span class="small-muted">· ${escapeHtml(e.actor)}</span></div><div class="event-time">${escapeHtml(dateLabel(e.created_at))}</div><div class="event-details">${escapeHtml(auditSummary(e.details))}</div></div></div>`).join('')}</div>` : '<div class="panel-caption">No audit events recorded for this case yet.</div>'}</div>
+      ${c.paypal_refund_id ? `<div class="detail-section"><h3>PayPal refund reference</h3><div class="message-quote">${escapeHtml(c.paypal_refund_id)} · ${escapeHtml(c.refund_status || 'status unknown')}</div></div>` : ''}
+    `;
+    const approveButton = document.getElementById('approve-refund-btn');
+    if (approveButton) approveButton.addEventListener('click', () => approveRefund(c.case_id));
+  }
+  function auditSummary(details) {
+    if (!details || typeof details !== 'object') return '';
+    const keys = ['issue_type','policy_decision','capture_id','request_id','refund_id','refund_status','error'];
+    const parts = keys.filter(k => details[k] !== undefined).map(k => `${k.replaceAll('_',' ')}: ${details[k]}`);
+    if (details.amount && details.amount.value) parts.push(`amount: ${details.amount.value} ${details.amount.currency_code || ''}`);
+    return parts.join(' · ') || 'Event recorded';
+  }
+  async function approveRefund(caseId) {
+    const key = el('admin-key').value.trim();
+    if (!key) { showToast('Enter the merchant ADMIN_API_KEY in the authorization field before approving.', true); el('admin-key').focus(); return; }
+    if (!confirm(`Approve the Sandbox refund for case ${caseId}? Only proceed for a test order.`)) return;
+    const button = document.getElementById('approve-refund-btn'); if (button) button.disabled = true;
+    try {
+      const result = await api(`/cases/${encodeURIComponent(caseId)}/approve-refund`, {method:'POST', headers:{'X-Admin-Key':key}});
+      showToast(`Refund request returned ${result.refund_status || result.status}. Refreshing case details.`);
+      await refreshAll(); await openCase(caseId);
+    } catch(error) {
+      showToast(`Refund was not confirmed: ${error.message}`, true);
+      if (button) button.disabled = false;
+    }
+  }
+  async function createCase(event) {
+    event.preventDefault();
+    const orderId = el('order-select').value;
+    const message = el('customer-message').value.trim();
+    if (!orderId || message.length < 5) { setFeedback('Choose an order and enter a customer message of at least five characters.','error'); return; }
+    const button = el('create-case-btn'); button.disabled = true; button.textContent = 'Investigating…';
+    try {
+      const result = await api('/cases',{method:'POST',body:JSON.stringify({order_id:orderId,customer_message:message})});
+      el('customer-message').value = '';
+      setFeedback(`Case ${result.case_id} created. Decision: ${result.policy_decision}. Status: ${result.status}.`,'success');
+      await refreshAll(); await openCase(result.case_id);
+      showToast(`Investigation created: ${result.case_id}`);
+    } catch(error) {
+      setFeedback(`Could not create case: ${error.message}`,'error');
+    } finally { button.disabled = false; button.textContent = '✦ Investigate complaint'; }
+  }
+  async function refreshAll() {
+    try {
+      const [health, orders, cases] = await Promise.all([api('/health'), api('/orders'), api('/cases')]);
+      if (!health || health.status !== 'ok') throw new Error('ResolveOS health check did not return ok.');
+      state.orders = Array.isArray(orders) ? orders : [];
+      state.cases = Array.isArray(cases) ? cases : [];
+      renderKPIs(); renderOrders(); renderOrderOptions(); renderCases();
+      if (state.selectedCaseId) {
+        const exists = state.cases.some(c => c.case_id === state.selectedCaseId);
+        if (exists) await openCase(state.selectedCaseId);
+      }
+    } catch(error) {
+      showToast(`Dashboard could not load data: ${error.message}`, true);
+      el('cases-table-body').innerHTML = `<tr><td colspan="5" class="empty">${escapeHtml(error.message)}<br>Confirm the FastAPI server is running and that the updated /cases endpoint is installed.</td></tr>`;
+    }
+  }
+  document.querySelectorAll('[data-scroll]').forEach(button => button.addEventListener('click', () => {
+    document.querySelectorAll('[data-scroll]').forEach(b => b.classList.toggle('active', b === button));
+    const target = document.getElementById(button.dataset.scroll); if (target) target.scrollIntoView({behavior:'smooth',block:'start'});
+  }));
+  el('cases-table-body').addEventListener('click', (event) => {
+    const button = event.target.closest('[data-open-case]'); if (button) openCase(button.dataset.openCase);
+  });
+  el('new-case-form').addEventListener('submit', createCase);
+  el('refresh-btn').addEventListener('click', refreshAll);
+  el('case-search').addEventListener('input', renderCases);
+  el('status-filter').addEventListener('change', renderCases);
+  el('clear-admin-key').addEventListener('click', () => { el('admin-key').value=''; showToast('Admin key cleared from this page.'); });
+  refreshAll();
+})();
+</script>
+</body>
+</html>

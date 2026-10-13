@@ -1,0 +1,51 @@
+RESOLVEOS — INDIVIDUAL FILE SETUP (WINDOWS POWERSHELL)
+
+Your project folder is assumed to be: C:\Users\Admin\Desktop\PAYPAL
+These files should be saved into this exact structure:
+
+PAYPAL\
+  .venv\                         (your existing virtual environment)
+  backend\
+    .env.example
+    .env                         (create by copying .env.example)
+    requirements.txt
+    app\
+      __init__.py
+      main.py
+      agent.py
+      db.py
+      paypal_client.py
+
+1. Download each individual file linked in the ChatGPT response.
+2. Save main.py, agent.py, db.py, paypal_client.py and __init__.py inside:
+   C:\Users\Admin\Desktop\PAYPAL\backend\app\
+3. Save requirements.txt, .env.example inside:
+   C:\Users\Admin\Desktop\PAYPAL\backend\
+4. In PowerShell, from C:\Users\Admin\Desktop\PAYPAL, run:
+
+   New-Item -ItemType Directory -Force -Path .\backend\app
+   Copy-Item .\backend\.env.example .\backend\.env
+   pip install -r .\backend\requirements.txt
+
+5. Open backend\.env and fill in your PayPal Sandbox credentials if/when needed.
+   GEMINI_API_KEY is optional for initial local testing; without it, a fallback classifier is used.
+   Do not share this .env file or upload it to GitHub.
+
+6. Start the server from the backend folder:
+
+   cd .\backend
+   ..\.venv\Scripts\python.exe -m uvicorn app.main:app --reload
+
+7. Open http://127.0.0.1:8000/docs
+
+Try GET /health and GET /orders first. Then POST /cases with:
+{
+  "order_id": "ORD-1001",
+  "customer_message": "My headphones were never shipped. Please help me."
+}
+
+IMPORTANT:
+- This is a prototype and uses PayPal Sandbox only.
+- A refund will NOT work until you create a real completed Sandbox capture, link its capture ID to the order, and approve the eligible case.
+- Seeded order and shipping data are fictional demo records.
+- Merchant-only endpoints require X-Admin-Key matching ADMIN_API_KEY in backend\.env.
